@@ -4,22 +4,26 @@ import { Route, Switch } from "react-router-dom";
 import AuthRedirect from './components/AuthRedirect/AuthRedirect';
 class App extends Component {
 	render() {
-		return (
-			<div className="App">
+		return <div className="App">
 				<Switch>
-					<Route
-						path="/login"
-						component={() => {
+					<Route path="/login" component={() => {
 							return "login";
-						}}
-					/>
-					<Route
-						path="/"
-						component={()=><AuthRedirect/>}
-					/>
+				}} />
+				<Route
+					path="/admin"
+					component={() => {
+						return "admin";
+					}}
+				/>
+				<Route
+					path="/student"
+					component={() => {
+						return "student";
+					}}
+				/>
+					<Route path="/" component={() => <AuthRedirect />} />
 				</Switch>
-			</div>
-		);
+			</div>;
 	}
 }
 

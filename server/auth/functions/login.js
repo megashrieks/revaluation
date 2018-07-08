@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { key } = require('../../../credentials');
+const { key } = require('../../../credentials/credentials');
 const exp_in_seconds = 10000;
 
 // token in header.
@@ -13,7 +13,7 @@ module.exports = (req, res) => {
       admin: req.body.admin
     }, key);
     res.json({ data: "hey" });
-  }catch {
+  }catch(e){
     res.status(401).json({ error: "auth error" })
   }
 }
