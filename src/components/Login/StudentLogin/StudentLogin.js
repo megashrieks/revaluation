@@ -28,7 +28,7 @@ class StudentLogin extends Component {
 		this.setState({
 			loading: true
 		});
-		axios.post("api/login/", {
+		axios.post("api/auth/login/", {
 			username: this.state.username,
 			password: this.state.password,
 			admin: false,
@@ -38,6 +38,7 @@ class StudentLogin extends Component {
 				loading: false
 			});
 		}).catch(thrown => {
+			console.log('hey')
 			if (axios.isCancel(thrown)) {
 				console.log(thrown.message);
 			} else {
