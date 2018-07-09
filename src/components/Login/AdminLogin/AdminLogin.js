@@ -59,7 +59,7 @@ class AdminLogin extends Component {
 					onSubmit={this.login}>
 					<HintedInput
 						error={this.state.usernameerror}
-						errorMsg={"Username cant contain symbols"}
+						errorMsg={"Username can't contain symbols"}
 						value={this.state.username}
 						type="username"
 						placeholder="username"
@@ -69,7 +69,7 @@ class AdminLogin extends Component {
 						test={this.checkSymbols}
 					/>
 					<HintedInput
-						value={this.state.username}
+						value={this.state.password}
 						type="password"
 						placeholder="password"
 						handleChange={(val, __) =>
