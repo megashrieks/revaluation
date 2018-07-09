@@ -3,7 +3,7 @@ import "./Loading.css";
 export default props => {
 	return (
 		<Fragment>
-			<div className="loading">
+			{props.loading && <div className="loading">
 				<div className="loading-cell">
 					<div className="lds-ellipsis">
 						<div />
@@ -12,7 +12,7 @@ export default props => {
 						<div />
 					</div>
 				</div>
-			</div>
+			</div>}
 			{props.children}
 		</Fragment>
 	);

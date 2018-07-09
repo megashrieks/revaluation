@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import getToken from '../utils/getToken';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 class AuthRedirect extends Component {
     state = {
         auth: 2,
@@ -11,7 +13,9 @@ class AuthRedirect extends Component {
     componentDidMount() {
         let token = getToken();
         if (token !== null) {
-                axios.get('/api/auth/check_auth')
+            axios.get('/api/auth/check_auth', {
+                    cancelToken:source.token
+                })
                 .then(data => {
                     this.setState({
                         auth: 1,
@@ -19,7 +23,10 @@ class AuthRedirect extends Component {
                     })
                 })
                 .catch(err => {
-                    this.setState({ auth: 0 })
+                    if (axios.isCancel(err))
+                        console.log(err.message);
+                    else
+                        this.setState({ auth: 0 })
                 })
         } else {
             this.setState({
@@ -27,7 +34,9 @@ class AuthRedirect extends Component {
             });
         }
     }
-
+    componentWillUnmount() {
+        source.cancel("Operation cancelled by user");
+    }
     render() {
         let mode;
         switch (this.state.auth) {
