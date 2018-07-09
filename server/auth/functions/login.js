@@ -26,10 +26,10 @@ module.exports = (req, res) => {
 
   model.findOne(query)
   .then(data => {
-    if(data === null) return res.json("auth error")
+    if(data === null) return res.status(401).json("auth error")
     let t = get_token(req.body);
     if(t === -1) throw "error";
     res.json(t);
   })
-  .catch(err => res.status(204).json("error while logging in!"))
+  .catch(err => res.status(401).json("error while logging in!"))
 }
