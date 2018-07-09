@@ -3,7 +3,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-
+import './HintedInput.css';
 class HintedInput extends Component {
 	constructor(props) {
 		super(props);
@@ -26,7 +26,9 @@ class HintedInput extends Component {
 	};
 	render() {
 		return <div className="input-field">
-			<FormControl error={this.props.error}>
+            <FormControl 
+                fullWidth
+                error={this.props.error}>
 				<InputLabel>{this.props.placeholder}</InputLabel>
                 <Input
                     type={this.props.type}

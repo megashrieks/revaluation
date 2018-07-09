@@ -15,7 +15,7 @@ class AdminLogin extends Component {
 		password: ""
 	};
 	checkSymbols = str => {
-		return /g/g.test(str);
+		return /[$-/:-?{-~!"^_`\\#@[\]]/g.test(str);
 	};
 	handleInput = key => (val, check) => {
 		this.setState({
@@ -34,10 +34,16 @@ class AdminLogin extends Component {
 			admin: true,
 			cancelToken:source.token
 		}).then(data => {
-			
+			this.setState({
+				loading: false
+			});
 		}).catch(thrown => {
 			if (axios.isCancel(thrown)) {
 				console.log(thrown.message);
+			} else {
+				this.setState({
+					loading: false
+				});
 			}
 		});
 	}
@@ -47,6 +53,7 @@ class AdminLogin extends Component {
 	render() {
 		return (
 			<Loading loading={this.state.loading}>
+				<div className="header">Admin login</div>
 				<form
 					name="admin-login"
 					onSubmit={this.login}>
@@ -54,7 +61,7 @@ class AdminLogin extends Component {
 						error={this.state.usernameerror}
 						errorMsg={"Username cant contain symbols"}
 						value={this.state.username}
-						type="password"
+						type="username"
 						placeholder="username"
 						handleChange={(val, check) =>
 							this.handleInput("username")(val, check)
@@ -69,7 +76,7 @@ class AdminLogin extends Component {
 							this.handleInput("password")(val)
 						}
 					/>
-					<Button variant="raised" color="primary" type="submit">
+					<Button variant="raised" style={{float:"right"}} color="primary" type="submit">
 						Submit
 					</Button>
 				</form>
