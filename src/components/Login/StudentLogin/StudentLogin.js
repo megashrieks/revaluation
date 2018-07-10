@@ -17,10 +17,10 @@ class StudentLogin extends Component {
 		// let final_date = year + "-" + month + "-" + date;
 		this.state = {
 			loading: false,
-			username: "",
+			username: "4NM16CS121",
 			usernameerror: false,
 			passworderror: false,
-			password: ""
+			password: "1998-06-08"
 		};
 	}
 	checkSymbols = str => {
@@ -45,17 +45,19 @@ class StudentLogin extends Component {
 				cancelToken: source.token
 			})
 			.then(data => {
-				this.setState({
-					loading: false
-				});
+				if (data.error)
+					this.setState({
+						loading: false
+					});
+				else
+					this.setState({
+						loading: false
+					});
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) {
 					console.log(thrown.message);
 				} else {
-					this.setState({
-						loading: false
-					});
 				}
 			});
 	};
@@ -83,7 +85,7 @@ class StudentLogin extends Component {
 						type="date"
 						placeholder="Birthday"
 						inputlabelprops={{
-							shrink:true
+							shrink: true
 						}}
 						handleChange={(val, __) =>
 							this.handleInput("password")(val)

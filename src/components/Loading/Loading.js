@@ -3,17 +3,21 @@ import "./Loading.css";
 export default props => {
 	return (
 		<Fragment>
-			{props.loading && <div className="loading">
-				<div className="loading-cell">
-					<div className="lds-ellipsis">
-						<div />
-						<div />
-						<div />
-						<div />
+			{props.children}
+			{props.loading && (
+				<div className="loading-wrapper">
+					<div className="loading">
+						<div className="loading-cell">
+							<div className="lds-ellipsis">
+								<div />
+								<div />
+								<div />
+								<div />
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>}
-			{props.children}
+			)}
 		</Fragment>
 	);
 };

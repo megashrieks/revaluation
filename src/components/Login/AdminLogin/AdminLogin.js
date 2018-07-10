@@ -34,17 +34,17 @@ class AdminLogin extends Component {
 			admin: true,
 			cancelToken:source.token
 		}).then(data => {
+			if (data.error)
+				this.setState({
+					loading: false
+				});
+			else
 			this.setState({
 				loading: false
 			});
 		}).catch(thrown => {
-			if (axios.isCancel(thrown)) {
+			if (axios.isCancel(thrown)) 
 				console.log(thrown.message);
-			} else {
-				this.setState({
-					loading: false
-				});
-			}
 		});
 	}
 	componentWillUnmount() {

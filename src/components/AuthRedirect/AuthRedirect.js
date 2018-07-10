@@ -17,16 +17,21 @@ class AuthRedirect extends Component {
                     cancelToken:source.token
                 })
                 .then(data => {
-                    this.setState({
-                        auth: 1,
-                        admin: data.admin
-                    })
+                    if (data.error) this.setState({
+							auth: 0
+						});
+					else this.setState({
+							auth: 1,
+							admin: data.admin
+						});
                 })
                 .catch(err => {
                     if (axios.isCancel(err))
                         console.log(err.message);
                     else
-                        this.setState({ auth: 0 })
+                        this.setState({
+                            auth: 0
+                        });
                 })
         } else {
             this.setState({
