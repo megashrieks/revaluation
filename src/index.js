@@ -7,6 +7,7 @@ import registerServiceWorker from "./registerServiceWorker";
 import axios from "axios";
 import getToken from "./components/utils/getToken";
 axios.interceptors.request.use(config => {
+	console.log(config);
 	let token = getToken();
 	if (token !== null) config.headers.Authorization = token;
 	return config;

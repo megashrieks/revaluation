@@ -38,7 +38,7 @@ class StudentLogin extends Component {
 			loading: true
 		});
 		axios
-			.post("api/login/", {
+			.post("api/auth/login/", {
 				username: this.state.username,
 				password: this.state.password,
 				admin: false,
