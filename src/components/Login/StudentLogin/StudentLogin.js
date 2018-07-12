@@ -3,18 +3,14 @@ import Loading from "../../Loading/Loading";
 import HintedInput from "../../HintedInput/HintedInput";
 import { Button } from "@material-ui/core";
 import axios from "axios";
+import setToken from "../../utils/setToken";
+import { withRouter } from "react-router-dom";
 const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+let source = CancelToken.source();
 
 class StudentLogin extends Component {
 	constructor() {
 		super();
-		// let date = new Date().getDate();
-		// date = date < 10 ? "0" + date : date;
-		// let month = new Date().getMonth()+1;
-		// month = month < 10 ? "0" + month : month;
-		// let year = new Date().getFullYear();
-		// let final_date = year + "-" + month + "-" + date;
 		this.state = {
 			loading: false,
 			username: "4NM16CS121",
@@ -38,29 +34,35 @@ class StudentLogin extends Component {
 			loading: true
 		});
 		axios
-			.post("api/auth/login/", {
+			.post("/api/auth/login/", {
 				username: this.state.username,
 				password: this.state.password,
-				admin: false,
+				admin: false
+			}, {
 				cancelToken: source.token
 			})
 			.then(data => {
-				if (data.error)
+				if (data.data.error) {
+					console.log("User name or password is incorrect");
 					this.setState({
 						loading: false
 					});
-				else
-					this.setState({
-						loading: false
-					});
+				}
+				else {
+					setToken(data.data);
+					this.setState({ loading: false });
+					this.props.history.push('/');
+				}
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) {
 					console.log(thrown.message);
-				} else {
 				}
 			});
 	};
+	componentWillMount() {
+		source = CancelToken.source();
+	}
 	componentWillUnmount() {
 		source.cancel("Operation cancelled by user");
 	}
@@ -104,4 +106,4 @@ class StudentLogin extends Component {
 		);
 	}
 }
-export default StudentLogin;
+export default withRouter(StudentLogin);

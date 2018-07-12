@@ -4,7 +4,6 @@ const port = 5000;
 const mongoose = require('mongoose');
 const { db_url } = require('./credentials/credentials');
 
-// app.use(require('cors')());
 mongoose.connect(db_url, { useNewUrlParser: true })
 .then(_ => console.log('connected to db'))
 .catch(_ => console.log('error connecting to db'));

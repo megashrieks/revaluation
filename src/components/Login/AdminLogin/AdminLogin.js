@@ -3,8 +3,10 @@ import Loading from "../../Loading/Loading";
 import HintedInput from "../../HintedInput/HintedInput";
 import { Button } from "@material-ui/core";
 import axios from "axios";
+import setToken from "../../utils/setToken";
+import { withRouter } from "react-router-dom";
 const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+let source = CancelToken.source();
 
 class AdminLogin extends Component {
 	state = {
@@ -23,29 +25,42 @@ class AdminLogin extends Component {
 			[key + "error"]: check
 		});
 	};
-	login = (e) => {
+	login = e => {
 		e.preventDefault();
 		this.setState({
 			loading: true
 		});
-		axios.post("api/auth/login/", {
-			username: this.state.username,
-			password: this.state.password,
-			admin: true,
-			cancelToken:source.token
-		}).then(data => {
-			if (data.error)
-				this.setState({
-					loading: false
-				});
-			else
-			this.setState({
-				loading: false
+		axios
+			.post(
+				"/api/auth/login/",
+				{
+					username: this.state.username,
+					password: this.state.password,
+					admin: true
+				},
+				{
+					cancelToken: source.token
+				}
+			)
+			.then(data => {
+				console.log(data);
+				if (data.data.error) {
+					console.log("User name or password is incorrect");
+					this.setState({
+						loading: false
+					});
+				} else {
+					setToken(data.data);
+					this.setState({ loading: false });
+					this.props.history.push("/");
+				}
+			})
+			.catch(thrown => {
+				if (axios.isCancel(thrown)) console.log(thrown.message);
 			});
-		}).catch(thrown => {
-			if (axios.isCancel(thrown)) 
-				console.log(thrown.message);
-		});
+	};
+	componentWillMount() {
+		source = CancelToken.source();
 	}
 	componentWillUnmount() {
 		source.cancel("Operation cancelled by user");
@@ -54,9 +69,7 @@ class AdminLogin extends Component {
 		return (
 			<Loading loading={this.state.loading}>
 				<div className="header">Admin login</div>
-				<form
-					name="admin-login"
-					onSubmit={this.login}>
+				<form name="admin-login" onSubmit={this.login}>
 					<HintedInput
 						error={this.state.usernameerror}
 						errorMsg={"Username can't contain symbols"}
@@ -76,7 +89,12 @@ class AdminLogin extends Component {
 							this.handleInput("password")(val)
 						}
 					/>
-					<Button variant="raised" style={{float:"right"}} color="primary" type="submit">
+					<Button
+						variant="raised"
+						style={{ float: "right" }}
+						color="primary"
+						type="submit"
+					>
 						Submit
 					</Button>
 				</form>
@@ -84,4 +102,4 @@ class AdminLogin extends Component {
 		);
 	}
 }
-export default AdminLogin;
+export default withRouter(AdminLogin);

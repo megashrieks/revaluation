@@ -13,21 +13,25 @@ class AuthRedirect extends Component {
     componentDidMount() {
         let token = getToken();
         if (token !== null) {
-            axios.get('/api/auth/check_auth', {
+            axios.get('/api/auth/check_auth', {}, {
                     cancelToken:source.token
                 })
                 .then(data => {
-                    if (data.error) this.setState({
+                    if (data.data.error) {
+                        this.setState({
 							auth: 0
-						});
-					else this.setState({
+                        });
+                    }
+                    else {
+                        this.setState({
 							auth: 1,
-							admin: data.admin
-						});
+							admin: data.data.admin
+                        });
+                    }
                 })
-                .catch(err => {
-                    if (axios.isCancel(err))
-                        console.log(err.message);
+                .catch(thrown => {
+                    if (axios.isCancel(thrown))
+                        console.log(thrown.message);
                     else
                         this.setState({
                             auth: 0
