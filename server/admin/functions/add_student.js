@@ -4,6 +4,6 @@ const { student } = require('../../models');
 
 module.exports = (req, res) => {
   new student(req.body.student_data).save()
-  .then(_ => res.json({ data: "successfuly uploaded"}))
+  .then(_ => res.json("successfuly uploaded"))
   .catch(_ => res.json({ error: "error while uploading to db" }));
 }
