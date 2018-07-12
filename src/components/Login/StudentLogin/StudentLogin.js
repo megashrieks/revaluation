@@ -16,7 +16,8 @@ class StudentLogin extends Component {
 			username: "4NM16CS121",
 			usernameerror: false,
 			passworderror: false,
-			password: "1998-06-08"
+			password: "1998-06-08",
+			errorinfo: "You need to enter a valid USN"
 		};
 	}
 	checkSymbols = str => {
@@ -25,7 +26,8 @@ class StudentLogin extends Component {
 	handleInput = key => (val, check) => {
 		this.setState({
 			[key]: val,
-			[key + "error"]: check
+			[key + "error"]: check,
+			errorinfo: "You need to enter a valid USN"
 		});
 	};
 	login = e => {
@@ -43,9 +45,10 @@ class StudentLogin extends Component {
 			})
 			.then(data => {
 				if (data.data.error) {
-					console.log("User name or password is incorrect");
 					this.setState({
-						loading: false
+						loading: false,
+						usernameerror: true,
+						errorinfo: "Username or password is incorrect"
 					});
 				}
 				else {
@@ -73,7 +76,7 @@ class StudentLogin extends Component {
 				<form name="admin-login" onSubmit={this.login}>
 					<HintedInput
 						error={this.state.usernameerror}
-						errorMsg={"You need to enter a valid USN"}
+						errorMsg={this.state.errorinfo}
 						value={this.state.username}
 						type="username"
 						placeholder="username"

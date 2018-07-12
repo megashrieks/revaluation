@@ -14,7 +14,8 @@ class AdminLogin extends Component {
 		username: "",
 		usernameerror: false,
 		passworderror: false,
-		password: ""
+		password: "",
+		errorinfo: "Username can't contain symbols"
 	};
 	checkSymbols = str => {
 		return /[$-/:-?{-~!"^_`\\#@[\]]/g.test(str);
@@ -22,7 +23,8 @@ class AdminLogin extends Component {
 	handleInput = key => (val, check) => {
 		this.setState({
 			[key]: val,
-			[key + "error"]: check
+			[key + "error"]: check,
+			errorinfo: "Username can't contain symbols"
 		});
 	};
 	login = e => {
@@ -45,9 +47,10 @@ class AdminLogin extends Component {
 			.then(data => {
 				console.log(data);
 				if (data.data.error) {
-					console.log("User name or password is incorrect");
 					this.setState({
-						loading: false
+						loading: false,
+						usernameerror:true,
+						errorinfo:"Username or password is incorrect"
 					});
 				} else {
 					setToken(data.data);
@@ -72,7 +75,7 @@ class AdminLogin extends Component {
 				<form name="admin-login" onSubmit={this.login}>
 					<HintedInput
 						error={this.state.usernameerror}
-						errorMsg={"Username can't contain symbols"}
+						errorMsg={this.state.errorinfo}
 						value={this.state.username}
 						type="username"
 						placeholder="username"
