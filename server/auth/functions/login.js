@@ -7,7 +7,6 @@ const { student, admin } = require('../../models');
 
 const get_token = data => {
   try {
-    console.log(data);
     let token = jwt.sign({
       exp: Math.floor(Date.now() / 1000) + exp_in_seconds,
       username: data.username,
@@ -15,15 +14,13 @@ const get_token = data => {
     }, key);
     return token;
   }
-  catch(e) {
-    return -1;
-  }
+  catch(e) { return -1; }
 }
 
 module.exports = (req, res) => {
   let [model, query] = req.body.admin ? 
   [admin, { username: req.body.username, password: req.body.password }] : 
-  [student, { usn: req.body.username, dob: new Date(req.body.password) }];
+  [student, { usn: req.body.username.toUpperCase(), dob: new Date(req.body.password) }];
   
   model.findOne(query)
   .then(data => {
