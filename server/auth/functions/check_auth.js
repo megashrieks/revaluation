@@ -4,8 +4,8 @@ const { key } = require('../../../credentials/credentials');
 module.exports = (req, res) => {
   try {
     let token = jwt.verify(req.headers.token, key);
-    res.json({ admin: token.admin, user: token.user });
+    res.json({ admin: token.admin });
   }catch (e){
-    res.status(401).json("auth error")
+    res.status(401).json({ error: "auth error" })
   }
 }
