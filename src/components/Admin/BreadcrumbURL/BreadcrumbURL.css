@@ -1,0 +1,8 @@
+.breadcrumb-url{
+    width:100%;
+    line-height:20px;
+    font-size:15px;
+    background:#eee;
+    padding:10px 50px;
+    box-sizing: border-box;
+}

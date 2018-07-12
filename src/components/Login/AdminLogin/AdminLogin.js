@@ -12,19 +12,21 @@ class AdminLogin extends Component {
 	state = {
 		loading: false,
 		username: "",
+		autherror: false,
 		usernameerror: false,
 		passworderror: false,
-		password: "",
-		errorinfo: "Username can't contain symbols"
+		password: ""
 	};
+	errorinfo = "Username can't contain symbols";
+	authmsg = "Username or password is incorrect";
 	checkSymbols = str => {
 		return /[$-/:-?{-~!"^_`\\#@[\]]/g.test(str);
 	};
 	handleInput = key => (val, check) => {
 		this.setState({
 			[key]: val,
-			[key + "error"]: check,
-			errorinfo: "Username can't contain symbols"
+			autherror: false,
+			[key + "error"]: check
 		});
 	};
 	login = e => {
@@ -45,12 +47,10 @@ class AdminLogin extends Component {
 				}
 			)
 			.then(data => {
-				console.log(data);
 				if (data.data.error) {
 					this.setState({
 						loading: false,
-						usernameerror:true,
-						errorinfo:"Username or password is incorrect"
+						autherror: true
 					});
 				} else {
 					setToken(data.data);
@@ -74,8 +74,10 @@ class AdminLogin extends Component {
 				<div className="header">Admin login</div>
 				<form name="admin-login" onSubmit={this.login}>
 					<HintedInput
-						error={this.state.usernameerror}
-						errorMsg={this.state.errorinfo}
+						error={this.autherror || this.state.usernameerror}
+						errorMsg={
+							this.state.autherror ? this.authmsg : this.errorinfo
+						}
 						value={this.state.username}
 						type="username"
 						placeholder="username"
