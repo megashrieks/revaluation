@@ -6,7 +6,7 @@ export default class BookletUpload extends Component {
 		return (
 			<div className="uploader">
 				<UploadForm
-					actionRoute="/api/admin/add_booklet_details_ex"
+					actionRoute="/api/admin/add_booklet_details"
                     filename="file_input"
 					placeholder="Upload booklet data"
 				/>

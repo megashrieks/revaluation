@@ -6,6 +6,6 @@ module.exports = mongoose.model(
     usn: String,
     sub_code: String,
     sub_name: String,
-    booklet_code: String
+    booklet_code: Number
   })
 );
