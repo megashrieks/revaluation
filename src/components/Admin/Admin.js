@@ -4,6 +4,7 @@ import { Link, Route, Switch, withRouter } from "react-router-dom";
 import "./Admin.css";
 import Dashboard from "./Dashboard/Dashboard";
 import Reports from "./Reports/Reports";
+import BookletUpload from './BookletUpload/BookletUpload';
 class Admin extends Component {
 	state = {
 		url: [
@@ -24,6 +25,10 @@ class Admin extends Component {
 					{
 						name: "Reports",
 						url: "/reports"
+					},
+					{
+						name: "Booklet upload",
+						url: "/booklet"
 					},
 					{
 						name: "add students",
@@ -64,6 +69,13 @@ class Admin extends Component {
 									activator={this.activator}
 								/>
 							);
+						}}
+					/>
+					<Route
+						path={this.props.match.url + "/booklet"}
+						component={() => {
+							this.activator(2);
+							return <BookletUpload />;
 						}}
 					/>
 					<Route
