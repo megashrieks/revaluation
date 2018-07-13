@@ -7,6 +7,9 @@ module.exports = mongoose.model(
     name: String,
     dob: Date,
     branch: String,
-    email: String
+    email: String,
+    opted_subjects: [
+      new mongoose.Schema({ sub_name: String, sub_code: String })
+    ]
   })
 );
