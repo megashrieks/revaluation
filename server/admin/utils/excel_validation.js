@@ -8,7 +8,9 @@ const msg_generator = (success, error_msg) => {
 // does both duplicate check and format check.
 module.exports = (dataset, format_array, dup_index) => {
   const column_length = format_array.length;
-  let s = new Set();
+  const dup_check_needed = dup_index !== -1;
+  let s = dup_check_needed ? new Set() : null;
+    
 
   for(let data of dataset) {
     // format/type check.
@@ -23,9 +25,12 @@ module.exports = (dataset, format_array, dup_index) => {
         return msg_generator(false, "invalid data format!!!");
     
     // duplicate check.
-    if(s.has(data[dup_index]))
-      return msg_generator(false, "duplicate id found!!!")
-    s.add(data[dup_index])
+    if(dup_check_needed) {
+      if(s.has(data[dup_index]))
+        return msg_generator(false, "duplicate id found!!!")
+      s.add(data[dup_index])
+    }
+    
   }
   return msg_generator(true, null);
 }

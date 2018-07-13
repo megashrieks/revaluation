@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { key } = require('../../credentials/credentials');
 
 module.exports = (req, res, next) => {
   try {
@@ -6,6 +7,6 @@ module.exports = (req, res, next) => {
     if(decoded_data.admin) next();
     else throw "error";
   }catch(err) {
-    res.status(401).json('auth error');
+    res.status(401).json({ error: 'auth error' });
   }
 }
