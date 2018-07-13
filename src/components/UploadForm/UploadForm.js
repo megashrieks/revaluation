@@ -1,72 +1,70 @@
 import React, { Component, Fragment } from "react";
 import "./UploadForm.css";
 import axios from "axios";
-import { Snackbar } from "@material-ui/core";
+const CancelToken = axios.CancelToken;
+let source = CancelToken.source();
 class UploadForm extends Component {
 	state = {
 		filename: "",
 		file: null,
-		snack: false,
-		msg: "",
 		filePath: "",
 		uploading: false
 	};
-	unmounted = false;
+	componentWillMount() {
+		source = CancelToken.source();
+	}
 	componentWillUnmount() {
-		this.unmounted = true;
+		source.cancel("Operation cancelled by user");
 	}
 	changeData = ({ target: { value, files } }) => {
 		if (files.length !== 0)
-			!this.unmounted && this.setState({
-					filename: files[0].name,
-					file: files[0],
-					filePath: value
-				});
+			this.setState({
+				filename: files[0].name,
+				file: files[0],
+				filePath: value
+			});
 		else
-			!this.unmounted && this.setState({
-					filename: "",
-					file: null,
-					filePath: ""
-				});
+			this.setState({
+				filename: "",
+				file: null,
+				filePath: ""
+			});
 	};
 	submit = e => {
-		!this.unmounted && this.setState({ uploading: true });
+		this.setState({ uploading: true });
 		if (!!this.state.filename) {
 			let formdata = new FormData();
 			formdata.append(this.props.filename, this.state.file);
 			let config = {
 				headers: {
 					"content-type": "multipart/form-data"
-				}
+				},
+				cancelToken: source.token
 			};
-			axios.post(this.props.actionRoute, formdata, config).then(data => {
-				let msg = "";
-				if (data.data.error) msg = data.data.error;
-				else msg = data.data.data;
-				!this.unmounted && this.setState({
-						snack: true,
-						msg: msg,
+			axios
+				.post(this.props.actionRoute, formdata, config)
+				.then(data => {
+					let msg = "";
+					if (!!data.data.error) msg = data.data.error;
+					else msg = data.data;
+					this.props.onFinish(msg);
+					this.setState({
 						filename: "",
 						file: null,
 						filePath: "",
 						uploading: false
 					});
-			});
+				})
+				.catch(thrown => {
+					if (axios.isCancel(thrown)) {
+						console.log(thrown.message);
+					}
+				});
 		}
-	};
-	handleClose = name => () => {
-		!this.unmounted && this.setState({ [name]: false });
 	};
 	render() {
 		return (
 			<Fragment>
-				<Snackbar
-					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-					open={this.state.snack}
-					autoHideDuration={3000}
-					onClose={this.handleClose("snack")}
-					message={<span>{this.state.msg || "Error!"}</span>}
-				/>
 				<div
 					className={
 						"upload-wrapper" +

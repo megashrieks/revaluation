@@ -4,7 +4,7 @@ import getToken from '../utils/getToken';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
 const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
+let source = CancelToken.source();
 class AuthRedirect extends Component {
     state = {
         auth: 2,
@@ -42,6 +42,9 @@ class AuthRedirect extends Component {
                 auth: 0
             });
         }
+    }
+    componentWillMount() {
+        source = CancelToken.source();
     }
     componentWillUnmount() {
         source.cancel("Operation cancelled by user");
