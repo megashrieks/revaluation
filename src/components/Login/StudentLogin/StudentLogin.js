@@ -67,7 +67,7 @@ class StudentLogin extends Component {
 				}
 			});
 	};
-	componentWillMount() {
+	componentDidMount() {
 		source = CancelToken.source();
 	}
 	componentWillUnmount() {

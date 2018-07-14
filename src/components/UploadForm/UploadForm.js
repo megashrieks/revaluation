@@ -10,7 +10,7 @@ class UploadForm extends Component {
 		filePath: "",
 		uploading: false
 	};
-	componentWillMount() {
+	componentDidMount() {
 		source = CancelToken.source();
 	}
 	componentWillUnmount() {

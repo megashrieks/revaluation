@@ -11,6 +11,7 @@ class AuthRedirect extends Component {
         admin: false
     };
     componentDidMount() {
+        source = CancelToken.source();
         let token = getToken();
         if (token !== null) {
             axios.get('/api/auth/check_auth', {}, {
@@ -42,9 +43,6 @@ class AuthRedirect extends Component {
                 auth: 0
             });
         }
-    }
-    componentWillMount() {
-        source = CancelToken.source();
     }
     componentWillUnmount() {
         source.cancel("Operation cancelled by user");

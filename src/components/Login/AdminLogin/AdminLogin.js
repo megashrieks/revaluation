@@ -62,7 +62,7 @@ class AdminLogin extends Component {
 				if (axios.isCancel(thrown)) console.log(thrown.message);
 			});
 	};
-	componentWillMount() {
+	componentDidMount() {
 		source = CancelToken.source();
 	}
 	componentWillUnmount() {
