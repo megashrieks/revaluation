@@ -5,7 +5,8 @@ const add_student = require('./add_student'),
       add_stud_reg_course = require('./add_stud_reg_course'),
       add_stud_reg_courses = require('./add_stud_reg_courses'),
       add_booklet_details = require('./add_booklet_details'),
-      get_report = require('./get_report');
+      get_report = require('./get_report'),
+      get_branches = require('./get_branches');
 
 module.exports = {
   add_student,
@@ -15,5 +16,6 @@ module.exports = {
   add_stud_reg_course,
   add_stud_reg_courses,
   add_booklet_details,
-  get_report
+  get_report,
+  get_branches
 }
