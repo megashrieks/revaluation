@@ -11,6 +11,6 @@ module.exports = (admin_flag) => (req, res, next) => {
     }
     else throw "error";
   }catch(err) {
-    res.status(401).json({ error: 'auth error' });
+    res.json({ error: 'auth error' });
   }
 }

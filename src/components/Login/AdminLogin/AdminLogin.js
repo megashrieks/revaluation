@@ -74,7 +74,7 @@ class AdminLogin extends Component {
 				<div className="header">Admin login</div>
 				<form name="admin-login" onSubmit={this.login}>
 					<HintedInput
-						error={this.autherror || this.state.usernameerror}
+						error={this.state.autherror || this.state.usernameerror}
 						errorMsg={
 							this.state.autherror ? this.authmsg : this.errorinfo
 						}
