@@ -2,7 +2,7 @@ const router = require('express').Router();
 const fileUpload = require('express-fileupload');
 
 const functions = require('./functions');
-const excel_upload_middleware = require('./utils/excel_upload_middleware');
+const excel_upload_middleware = require('../utils/excel_upload_middleware');
 
 router.use(fileUpload());
 

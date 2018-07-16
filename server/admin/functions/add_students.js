@@ -1,6 +1,6 @@
 const xlsx = require('node-xlsx').default;
 const { student } = require('../../models');
-const is_valid = require('../utils/excel_validation');
+const is_valid = require('../../utils/excel_validation');
 
 const format_array = [
   "string",

@@ -1,5 +1,5 @@
 const { student } = require('../../models');
-const is_valid = require('../utils/excel_validation');
+const is_valid = require('../../utils/excel_validation');
 
 const format_array = ['string', 'string', 'string'];
 
