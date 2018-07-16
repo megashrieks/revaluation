@@ -10,3 +10,13 @@ html {
 	height: 100%;
 	width: 100%;
 }
+.quarter{
+	width:25%;
+	float:left;
+}
+.marg-5-10{
+	margin:5px 10px;
+}
+.padd-25-50{
+	padding:25px 50px;
+}

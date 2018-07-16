@@ -5,8 +5,11 @@ class Dashboard extends Component{
     render() {
         return (
             <Fragment>
-                <Link className = "card" to="/admin/booklet">
+                <Link className="card" to="/admin/booklet">
                     Booklet upload
+                </Link>
+                <Link className="card" to="/admin/reports">
+                    Reports
                 </Link>
             </Fragment>
         );

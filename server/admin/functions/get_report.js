@@ -2,9 +2,8 @@ const start_sem = 1, end_sem = 8, inc = 1;
 const { subject } = require('../../models');
 
 module.exports = (req, res) => {
-
   subject.aggregate([
-    { $match: { branch: req.branch } },   // match docs with given branch.
+    { $match: { branch: req.body.branch } },   // match docs with given branch.
     { 
       $group:   // group subjects by sem.
       { 
