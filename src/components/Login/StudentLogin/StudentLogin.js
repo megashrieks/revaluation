@@ -23,7 +23,7 @@ class StudentLogin extends Component {
 	errorinfo = "You need to enter a valid USN";
 	authmsg = "username or password is incorrect";
 	checkSymbols = str => {
-		return !/^4NM\d{2}[a-zA-Z]{2,3}\d{3}$/gi.test(str);
+		return !/^4N[a-zA-Z]\d{2}[a-zA-Z]{2,3}\d{3}$/gi.test(str);
 	};
 	handleInput = key => (val, check) => {
 		this.setState({

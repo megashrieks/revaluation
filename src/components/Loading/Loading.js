@@ -3,7 +3,7 @@ import "./Loading.css";
 export default props => {
 	return (
 		<Fragment>
-			{props.children}
+			{(!!props.conditional && props.loading) ? null:props.children}
 			{props.loading && (
 				<div className="loading-wrapper">
 					<div className="loading">
