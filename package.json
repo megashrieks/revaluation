@@ -12,6 +12,8 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.1",
     "node-xlsx": "^0.12.1",
+    "nodemailer": "^4.6.7",
+    "pdfmake": "^0.1.37",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router": "^4.3.1",

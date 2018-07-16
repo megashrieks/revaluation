@@ -22,5 +22,7 @@ yarn-error.log*
 
 credentials
 
+assumptions.txt
+
 public/fontawesome
 public/Roboto-Regular.ttf
