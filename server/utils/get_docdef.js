@@ -1,4 +1,4 @@
-module.exports = (sem, name, usn, sub_arr) => {
+module.exports = (name, usn, sub_arr) => {
   return {
     content: [
       `name:  ${name}\n`,
@@ -12,7 +12,7 @@ module.exports = (sem, name, usn, sub_arr) => {
             ['sl.no', 'semester', 'course code', 'course title',
               'CIE marks', 'SEE marks'
             ],
-            ...sub_arr.map((sub, index) => [index+1, sem, sub.sub_code,
+            ...sub_arr.map((sub, index) => [index+1, sub.sem, sub.sub_code,
             sub.sub_name, null, null])
           ]
         }

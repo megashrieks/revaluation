@@ -5,7 +5,7 @@ pdfmake.vfs = vfs_fonts.pdfMake.vfs;
 
 const { mail_add, mail_pwd } = require('../../../credentials/credentials');
 const get_docdef = require('../../utils/get_docdef');
-// const { student } = require('../../models');
+const { reval, student } = require('../../models');
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -35,17 +35,25 @@ const mailOptions = {
 
 
 module.exports = (req, res) => {
-  const doc_def = get_docdef(
-    4, req.body.name, req.body.usn, req.body.sub_arr
-  );
-  pdfmake.createPdf(doc_def).getBase64(base_64_data => {
-    mailOptions.attachments[0].content = base_64_data;
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error)
-        return res.json({ error: "error while sending the mail!" });
-      mailOptions.attachments[0].content = null;
-      res.json('mail sent successfuly'); 
-    });
+  Promise.all(
+    [
+      student.findOne({ usn: req.usn }, { name: 1 }), 
+      reval.find({ usn: req.usn }, { sub_code: 1, sub_name: 1, sem: 1 })
+    ]
+  )
+  .then(data => {
+    pdfmake.createPdf(get_docdef(data[0].name, req.usn, data[1]))
+    .getBase64(base_64_data => {
+      mailOptions.attachments[0].content = base_64_data;
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error)
+          return res.json({ error: "error while sending the mail!" });
+        mailOptions.attachments[0].content = null;
+        res.json('mail sent successfuly'); 
+      });
+    })
+
   })
+  
 }
   

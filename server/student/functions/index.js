@@ -1,9 +1,9 @@
-const get_opted_subjects = require('./get_opted_subjects'),
+const get_student_info = require('./get_student_info'),
       send_mail = require('./send_mail')
       apply_reval = require('./apply_reval');
       
 module.exports = {
-  get_opted_subjects,
+  get_student_info,
   send_mail,
   apply_reval
 }
