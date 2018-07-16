@@ -39,7 +39,10 @@ class Reports extends Component {
 				}
 			});	
 	}
+	unmounted = false;
 	componentWillUnmount() {
+		this.unmounted = true;
+		console.log("unmounted right now");
 		source.cancel("Operation cancelled by user");
 	}
 	componentDidMount() {
@@ -50,13 +53,11 @@ class Reports extends Component {
 		axios
 			.get(
 				"/api/admin/get_branches",
-				{},
 				{
 					cancelToken: source.token
 				}
 			)
 			.then(data => {
-				console.log(data)
 				this.setState({
 					list: data.data,
 					loading: false

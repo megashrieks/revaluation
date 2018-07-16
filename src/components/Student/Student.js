@@ -1,8 +1,8 @@
-import React, { Component,Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
 import Loading from "../Loading/Loading";
-import { Redirect } from 'react-router-dom';
-import checkAuth from '../utils/checkAuth';
+import { Redirect } from "react-router-dom";
+import checkAuth from "../utils/checkAuth";
 const CancelToken = axios.CancelToken;
 let source;
 
@@ -11,10 +11,9 @@ export default class Student extends Component {
 		loading: false,
 		error: false,
 		subjects: [
-			{
-				sub_code: "abcdef",
-				sub_name: "ghijkl"
-			}
+			{ sub_code: "abcdef", sub_name: "ghijkl" },
+			{ sub_code: "abcaddef", sub_name: "ghijkl" },
+			{ sub_code: "afdbcdef", sub_name: "ghijkl" }
 		],
 		redirect: false,
 		pending: false,
@@ -22,9 +21,7 @@ export default class Student extends Component {
 	};
 	componentDidMount() {
 		source = CancelToken.source();
-		this.setState({
-			pending: true
-		});
+		this.setState({ pending: true });
 		checkAuth(source)
 			.then(data => {
 				if (data.data.admin === true)
@@ -40,7 +37,7 @@ export default class Student extends Component {
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) {
-					console.log("thrown.message");
+					console.log(thrown.message);
 				} else {
 					this.setState({
 						redirect: true,
@@ -86,7 +83,9 @@ export default class Student extends Component {
 		super();
 		axios.interceptors.response.use(resp => {
 			if (!!resp.data.error && resp.data.error === "auth error") {
-				this.setState({ redirect: true });
+				this.setState({
+					redirect: true
+				});
 				return null;
 			}
 			return resp;
@@ -98,10 +97,12 @@ export default class Student extends Component {
 	render() {
 		let routeChanger = this.state.redirect ? <Redirect to="/" /> : null;
 		return (
-            <Fragment>
-                {routeChanger}
-				<Loading loading={this.state.pending || this.state.loading}>
-					{this.state.name}
+			<Fragment>
+				{routeChanger}
+				<Loading loading={this.state.pending} conditional={true}>
+					<Loading loading={this.state.loading}>
+						{this.state.name}
+					</Loading>
 				</Loading>
 			</Fragment>
 		);

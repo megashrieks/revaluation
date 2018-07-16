@@ -16,13 +16,13 @@ class Admin extends Component {
 			redirect: false,
 			loading: false
 		};
-		axios.interceptors.response.use(resp => {
-			if (!!resp.data.error && resp.data.error === "auth error") {
-				this.setState({ redirect: true });
-				return null;
-			}
-			return resp;
-		});
+		// axios.interceptors.response.use(resp => {
+		// 	if (!!resp.data.error && resp.data.error === "auth error") {
+		// 		this.setState({ redirect: true });
+		// 		return null;
+		// 	}
+		// 	return resp;
+		// });
 	}
 	componentDidMount() {
 		source = CancelToken.source();
@@ -31,20 +31,21 @@ class Admin extends Component {
 		});
 		checkAuth(source)
 			.then(data => {
-				if (data.data.admin === false)
+				if (data.data.admin === false) {
 					this.setState({
 						redirect: true,
 						loading: false
 					});
-				else
-					this.setState({
-						redirect: false,
-						loading: false
-					});
+					}
+					else
+						this.setState({
+							redirect: false,
+							loading: false
+						});
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) {
-					console.log("thrown.message");
+					console.log(thrown.message);
 				} else {
 					this.setState({
 						redirect: true,
