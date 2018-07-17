@@ -12,6 +12,14 @@ class HintedInput extends Component {
 	}
 	handleChange = ({ target: { value } }) => {
 		this.setState(__ => {
+			this.props.handleChange(value, false);
+			return {
+				value: value
+			};
+		});
+	};
+	handleError = ({ target: { value } }) => {
+		this.setState(__ => {
 			let check;
 			if (!!this.props.test) check = this.props.test(value);
 			else check = true;
@@ -36,6 +44,7 @@ class HintedInput extends Component {
 						type={this.props.type}
 						value={this.state.value}
 						onChange={this.handleChange}
+						onBlur={this.handleError}
 					/>
 					<FormHelperText>
 						{this.props.error && this.props.errorMsg}

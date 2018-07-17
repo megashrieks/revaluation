@@ -1,0 +1,22 @@
+.panel {
+	width: 100%;
+	margin:0 auto;
+	background:#eee;
+}
+.panel-title:hover{
+	background:#ccc;
+}
+.panel-title {
+	cursor: pointer;
+	line-height: 50px;
+	padding-left:20px;
+	transition:0.3s;
+}
+.panel-details {
+	width: 100%;
+	height: auto;
+	padding:0 0 20px 40px;
+	word-wrap: break-word;
+	box-sizing: border-box;
+	color: #888;
+}

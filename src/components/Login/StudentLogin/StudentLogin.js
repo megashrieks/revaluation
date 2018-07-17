@@ -84,7 +84,7 @@ class StudentLogin extends Component {
 							this.state.autherror ? this.authmsg : this.errorinfo
 						}
 						value={this.state.username}
-						type="username"
+						type="text"
 						placeholder="username"
 						handleChange={(val, check) =>
 							this.handleInput("username")(val, check)

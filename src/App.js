@@ -5,8 +5,6 @@ import AuthRedirect from "./components/AuthRedirect/AuthRedirect";
 import Login from "./components/Login/Login";
 import Admin from "./components/Admin/Admin";
 import Student from "./components/Student/Student";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
 class App extends Component {
 	render() {
 		return (
