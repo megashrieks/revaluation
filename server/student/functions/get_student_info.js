@@ -1,4 +1,4 @@
-const { student } = require('../../models');
+const { student, reval } = require('../../models');
 
 module.exports = (req, res) => {
   student.findOne({ usn: req.usn }, 

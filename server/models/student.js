@@ -9,7 +9,13 @@ module.exports = mongoose.model(
     branch: String,
     email: String,
     opted_subjects: [
-      new mongoose.Schema({ sub_name: String, sub_code: String })
+      new mongoose.Schema(
+        { 
+          sub_name: String, 
+          sub_code: String, 
+          reval: { type: Boolean, default: false } 
+        }
+      )
     ]
   })
 );

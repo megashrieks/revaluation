@@ -1,4 +1,4 @@
-const { reval, usn_booklet, subject } = require('../../models');
+const { reval, usn_booklet, subject, student } = require('../../models');
 
 // reval_subs: [{ sub_code: '', sub_name: ''}, ...]
 
@@ -21,6 +21,10 @@ module.exports = (req, res) => {
       to_save.booklet_code = data[1].booklet_code;
       return new reval(to_save).save();
     })
+    .then(_ => student.findOneAndUpdate(
+      { usn: req.usn, "opted_subjects.sub_code": curr_sub.sub_code },
+      { $set: { "opted_subjects.$.reval": true } }
+    ));
   }))
   .then(data => res.json('success'))
   .catch(err => res.json({ error: "error while uploading!" }));

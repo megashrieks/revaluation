@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 
 const mailOptions = {
     from: mail_add, 
-    to: "prabhusachin44@gmail.com",
+    to: null,
     subject: "Revaluation application.",
     html: '<h3>wattup</h3>', 
     attachments: [
@@ -34,6 +34,8 @@ const mailOptions = {
 };
 
 
+// { email: '' } 
+
 module.exports = (req, res) => {
   Promise.all(
     [
@@ -44,6 +46,7 @@ module.exports = (req, res) => {
   .then(data => {
     pdfmake.createPdf(get_docdef(data[0].name, req.usn, data[1]))
     .getBase64(base_64_data => {
+      mailOptions.to = req.body.email;
       mailOptions.attachments[0].content = base_64_data;
       transporter.sendMail(mailOptions, (error, info) => {
         if (error)
