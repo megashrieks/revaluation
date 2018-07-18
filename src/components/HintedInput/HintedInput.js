@@ -10,6 +10,12 @@ class HintedInput extends Component {
 			value: props.value
 		};
 	}
+	componentWillUpdate(nextProps, nextState) {
+		if(this.props.value !== nextProps.value)
+		this.setState({
+			value:nextProps.value
+		})
+	}
 	handleChange = ({ target: { value } }) => {
 		this.setState(__ => {
 			this.props.handleChange(value, false);

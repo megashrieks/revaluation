@@ -191,7 +191,7 @@ export default class Student extends Component {
 		});
 	};
 	checkEmail = str => {
-		return str === "" || !/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/gi.test(
+		return str === "" || !/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/gi.test(
 			str
 		);
 	};

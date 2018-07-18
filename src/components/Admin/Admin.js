@@ -7,6 +7,7 @@ import BookletUpload from "./BookletUpload/BookletUpload";
 import axios from "axios";
 import checkAuth from "../utils/checkAuth";
 import Loading from "../Loading/Loading";
+import UserRegistration from "./UserRegistration/UserRegistration";
 const CancelToken = axios.CancelToken;
 let source;
 class Admin extends Component {
@@ -36,12 +37,11 @@ class Admin extends Component {
 						redirect: true,
 						loading: false
 					});
-					}
-					else
-						this.setState({
-							redirect: false,
-							loading: false
-						});
+				} else
+					this.setState({
+						redirect: false,
+						loading: false
+					});
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) {
@@ -72,6 +72,10 @@ class Admin extends Component {
 							<Route
 								path={this.props.match.url + "/booklet"}
 								component={() => <BookletUpload />}
+							/>
+							<Route
+								path={this.props.match.url+"/userreg"}
+								component={() => <UserRegistration />}
 							/>
 							<Route
 								path={this.props.match.url}

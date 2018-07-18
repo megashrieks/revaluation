@@ -21,7 +21,6 @@ module.exports = (req, res) => {
   let [model, query] = req.body.admin ? 
   [admin, { username: req.body.username, password: req.body.password }] : 
   [student, { usn: req.body.username.toUpperCase(), dob: new Date(req.body.password) }];
-  
   model.findOne(query)
   .then(data => {
     if(data === null) return res.json({ error: "invalid username or password!!"})
