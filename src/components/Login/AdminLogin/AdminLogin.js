@@ -59,7 +59,13 @@ class AdminLogin extends Component {
 				}
 			})
 			.catch(thrown => {
+				console.log(this.state.username,this.state.password)
 				if (axios.isCancel(thrown)) console.log(thrown.message);
+				else 
+					this.setState({
+						loading: false,
+						autherror: true
+					});
 			});
 	};
 	componentDidMount() {

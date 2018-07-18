@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 import './Dashboard.css';
 class Dashboard extends Component{
     render() {
-        return (
-            <Fragment>
-                <Link className="card" to="/admin/booklet">
-                    Booklet upload
-                </Link>
-                <Link className="card" to="/admin/reports">
-                    Reports
-                </Link>
-            </Fragment>
-        );
+        return <Fragment>
+				<Link className="card" to="/admin/booklet">
+					Booklet upload
+				</Link>
+				<Link className="card" to="/admin/reports">
+					Reports
+				</Link>
+				<Link className="card" to="/admin/userreg">
+					User Registration
+				</Link>
+			</Fragment>;
     }
 }
 export default Dashboard;
