@@ -1,4 +1,3 @@
-const xlsx = require('node-xlsx').default;
 const { student } = require('../../models');
 const is_valid = require('../../utils/excel_validation');
 
@@ -18,7 +17,7 @@ module.exports = (req, res) => {
   else 
     Promise.all(student_data.map(stud => {
       return new student({
-        usn: stud[0],
+        usn: stud[0].toUpperCase(),
         name: stud[1],
         dob: new Date((stud[2] - (25567+2))*86400*1000),
         branch: stud[3],
@@ -26,5 +25,5 @@ module.exports = (req, res) => {
       }).save();
     }))
     .then(data => res.json("data succesfully uploaded to db"))
-    .catch(err => res.json({ error: "error while uploading to db" }));
+    .catch(err => res.json("error while uploading to db"));
 }

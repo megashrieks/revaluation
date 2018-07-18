@@ -98,11 +98,11 @@ export default class UserRegistration extends Component {
 				.post(
 					"/api/admin/add_student",
 					{
-						studentData: {
+						student_data: {
 							name: this.state.name,
 							usn: this.state.USN,
 							dob: this.state.dob,
-							branch: this.state.dob,
+							branch: this.state.branch,
 							email: this.state.email
 						}
 					},
