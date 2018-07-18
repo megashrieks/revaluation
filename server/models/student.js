@@ -13,7 +13,7 @@ module.exports = mongoose.model(
         { 
           sub_name: String, 
           sub_code: String, 
-          reval: { type: Boolean, default: false } 
+          reval: { type: Boolean, default: false }
         }
       )
     ]
