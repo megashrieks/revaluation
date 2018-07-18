@@ -7,6 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { Button, Snackbar } from "@material-ui/core";
+import UploadForm from "../../UploadForm/UploadForm";
 import axios from "axios";
 const CancelToken = axios.CancelToken;
 let source;
@@ -133,7 +134,10 @@ export default class UserRegistration extends Component {
         this.setState({
             [name]: false
         });
-    };
+	};
+	onFinish = msg => {
+		this.setState({ snackmsg: msg, snack: true });
+	};
 	render() {
 		return (
             <Loading loading={this.state.loading}>
@@ -259,6 +263,14 @@ export default class UserRegistration extends Component {
 							Reset form
 						</Button>
 					</div>
+				</div>
+				<div>
+					<UploadForm
+						actionRoute="/api/admin/add_students"
+						filename="file_input"
+						placeholder="Upload user data"
+						onFinish={this.onFinish}
+					/>
 				</div>
 			</Loading>
 		);
