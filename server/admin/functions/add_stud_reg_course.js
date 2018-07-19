@@ -1,11 +1,14 @@
-const { student } = require('../../models');
+const { reval } = require('../../models');
 
-// { opted_subject: { sub_code: '', sub_name: '' } }
+// { usn: '', sub_code: '', sub_name: '' } }
 
 module.exports = (req, res) => {
-  student.findOneAndUpdate(
-    { usn: req.body.usn.toUpperCase() },
-    { $addToSet: { opted_subjects: req.body.opted_subject } }
-  ).then(data => res.json('success'))
-  .catch(err => res.json({ error: "error while uploading!!"}))
+  new reval({
+    usn: req.body.usn,
+    sub_code: req.body.sub_code,
+    sub_name: req.body.sub_name
+  })
+  .save()
+  .then(data => res.json('sucessfuly added to db!'))
+  .catch(err => res.json('error while uploading to db!!'));
 }

@@ -40,7 +40,10 @@ module.exports = (req, res) => {
   Promise.all(
     [
       student.findOne({ usn: req.usn }, { name: 1 }), 
-      reval.find({ usn: req.usn }, { sub_code: 1, sub_name: 1, sem: 1 })
+      reval.find(
+        { usn: req.usn, reval: true }, 
+        { sub_code: 1, sub_name: 1, sem: 1 }
+      )
     ]
   )
   .then(data => {
@@ -50,7 +53,7 @@ module.exports = (req, res) => {
       mailOptions.attachments[0].content = base_64_data;
       transporter.sendMail(mailOptions, (error, info) => {
         if (error)
-          return res.json({ error: "error while sending the mail!" });
+          return res.json("error while sending the mail!");
         mailOptions.attachments[0].content = null;
         res.json('mail sent successfuly'); 
       });

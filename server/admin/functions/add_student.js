@@ -16,5 +16,5 @@ module.exports = (req, res) => {
       return res.json('student registration successful');
     res.json('duplicate exists in db!');
   })
-  .catch(_ => res.json({ error: "error while uploading to db" }));
+  .catch(_ => res.json('error while uploading to db'));
 }

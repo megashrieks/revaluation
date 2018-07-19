@@ -26,5 +26,5 @@ module.exports = (req, res) => {
       }).save();
     }))
     .then(data => res.json("data succesfully uploaded to db"))
-    .catch(err => res.json({ error: "error while uploading to db" }));
+    .catch(err => res.json("error while uploading to db"));
 }

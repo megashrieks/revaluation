@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 
 module.exports = mongoose.model(
-  'reval_applicant', 
+  'reval', 
   new mongoose.Schema({
     usn: String,
-    branch: String,
     sub_code: String,
     sub_name: String,
-    sem: Number,
-    booklet_code: Number
+    reval: { type: Boolean, default: false }
   })
 );

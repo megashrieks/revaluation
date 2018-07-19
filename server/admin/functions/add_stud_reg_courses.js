@@ -1,4 +1,4 @@
-const { student } = require('../../models');
+const { reval } = require('../../models');
 const is_valid = require('../../utils/excel_validation');
 
 const format_array = ['string', 'string', 'string'];
@@ -10,11 +10,11 @@ module.exports = (req, res) => {
     return res.json({ error: check.error });
 
   Promise.all(stud_reg_courses.map(data => {
-    let sub = { sub_code: data[1], sub_name: data[2] }
-    return student.findOneAndUpdate(
-      { usn: data[0] },
-      { $push: { opted_subjects: sub } }
-    )
+    return new reval({
+      usn: data[0],
+      sub_code: data[1],
+      sub_name: data[2]
+    }).save();
   }))
   .then(_ => res.json("success"))
   .catch(_ => res.json({ error: "error while uploading!! "}));
