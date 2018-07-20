@@ -17,6 +17,9 @@ class Dashboard extends Component {
 				<Link className="card" to="/admin/studentsub">
 					Add student subject
 				</Link>
+				<Link className="card" to="/admin/subject">
+					Add subject
+				</Link>
 			</Fragment>
 		);
 	}

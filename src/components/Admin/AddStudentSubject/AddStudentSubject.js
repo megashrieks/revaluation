@@ -108,7 +108,7 @@ export default class AddStudentSubject extends Component {
 				/>
 				<div className="header">Add Student Registered Courses</div>
 
-				<div className="half padd-25">
+				<div className="half padd-15">
 					<HintedInput
 						error={this.state.USNerror}
 						errorMsg={this.USNerrormsg}
@@ -121,7 +121,7 @@ export default class AddStudentSubject extends Component {
 						test={this.USNTest}
 					/>
 				</div>
-				<div className="half padd-25">
+				<div className="half padd-15">
 					<HintedInput
 						error={this.state.sub_codeerror}
 						errorMsg={this.sub_codeerrormsg}
@@ -134,7 +134,7 @@ export default class AddStudentSubject extends Component {
 						test={this.symbolTest}
 					/>
 				</div>
-				<div className="half padd-25">
+				<div className="half padd-15">
 					<HintedInput
 						error={this.state.sub_nameerror}
 						errorMsg={this.sub_nameerrormsg}
@@ -147,7 +147,7 @@ export default class AddStudentSubject extends Component {
 						test={this.symbolTest}
 					/>
 				</div>
-				<div className="half padd-25">
+				<div className="half padd-15">
 					<div
 						className="marg-5-10"
 						style={{ display: "inline-block" }}

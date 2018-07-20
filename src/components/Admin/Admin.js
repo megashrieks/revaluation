@@ -1,5 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import {
+	Route,
+	Switch,
+	withRouter,
+	Redirect
+} from "react-router-dom";
 import "./Admin.css";
 import Dashboard from "./Dashboard/Dashboard";
 import Reports from "./Reports/Reports";
@@ -9,6 +14,7 @@ import checkAuth from "../utils/checkAuth";
 import Loading from "../Loading/Loading";
 import UserRegistration from "./UserRegistration/UserRegistration";
 import AddStudentSubject from "./AddStudentSubject/AddStudentSubject";
+import AddSubject from "./AddSubject/AddSubject";
 const CancelToken = axios.CancelToken;
 let source;
 class Admin extends Component {
@@ -79,8 +85,12 @@ class Admin extends Component {
 								component={() => <UserRegistration />}
 							/>
 							<Route
-								path={this.props.match.url+"/studentsub"}
+								path={this.props.match.url + "/studentsub"}
 								component={() => <AddStudentSubject />}
+							/>
+							<Route
+								path={this.props.match.url + "/subject"}
+								component={() => <AddSubject />}
 							/>
 							<Route
 								path={this.props.match.url}
