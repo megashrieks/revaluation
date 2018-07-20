@@ -26,7 +26,7 @@ export default class UserRegistration extends Component {
 	};
 	brancherrormsg = "Select a non-empty value";
 	sub_nameerrormsg = "Enter a valid subject name";
-	sub_codeerrormsg = "Enter a valid date of birth";
+	sub_codeerrormsg = "Enter a valid subject code";
 	typeerrormsg = "Select a non-empty value";
 	semerrormsg = "Select a non-empty value";
 	symbolTest = str => {

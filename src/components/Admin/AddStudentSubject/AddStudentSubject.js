@@ -17,7 +17,7 @@ export default class AddStudentSubject extends Component {
 	};
 	USNerrormsg = "Enter a valid USN";
 	sub_nameerrormsg = "Enter a valid subject name";
-	sub_codeerrormsg = "Enter a valid date of birth";
+	sub_codeerrormsg = "Enter a valid subject code";
 	symbolTest = str => {
 		return str === "" || /[$-/:-?{-~!"^_`\\#@[\]]/g.test(str);
 	};

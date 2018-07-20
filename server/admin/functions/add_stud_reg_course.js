@@ -5,8 +5,8 @@ const { reval } = require('../../models');
 module.exports = (req, res) => {
   new reval({
     usn: req.body.usn.toUpperCase(),
-    sub_code: req.body.sub_code.toUpperCase(),
-    sub_name: req.body.sub_name.toUpperCase()
+    sub_code: String(req.body.sub_code).toUpperCase(),
+    sub_name: String(req.body.sub_name).toUpperCase()
   })
   .save()
   .then(data => res.json('sucessfuly added to db!'))
