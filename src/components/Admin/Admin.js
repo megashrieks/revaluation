@@ -8,6 +8,7 @@ import axios from "axios";
 import checkAuth from "../utils/checkAuth";
 import Loading from "../Loading/Loading";
 import UserRegistration from "./UserRegistration/UserRegistration";
+import AddStudentSubject from "./AddStudentSubject/AddStudentSubject";
 const CancelToken = axios.CancelToken;
 let source;
 class Admin extends Component {
@@ -17,13 +18,13 @@ class Admin extends Component {
 			redirect: false,
 			loading: false
 		};
-		// axios.interceptors.response.use(resp => {
-		// 	if (!!resp.data.error && resp.data.error === "auth error") {
-		// 		this.setState({ redirect: true });
-		// 		return null;
-		// 	}
-		// 	return resp;
-		// });
+		axios.interceptors.response.use(resp => {
+			if (!!resp.data.error && resp.data.error === "auth error") {
+				this.setState({ redirect: true });
+				return null;
+			}
+			return resp;
+		});
 	}
 	componentDidMount() {
 		source = CancelToken.source();
@@ -74,8 +75,12 @@ class Admin extends Component {
 								component={() => <BookletUpload />}
 							/>
 							<Route
-								path={this.props.match.url+"/userreg"}
+								path={this.props.match.url + "/userreg"}
 								component={() => <UserRegistration />}
+							/>
+							<Route
+								path={this.props.match.url+"/studentsub"}
+								component={() => <AddStudentSubject />}
 							/>
 							<Route
 								path={this.props.match.url}
