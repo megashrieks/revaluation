@@ -18,8 +18,8 @@ module.exports = (req, res) => {
   else 
     Promise.all(subject_data.map(sub => {
       return new subject({
-        sub_code: sub[0],
-        sub_name: sub[1],
+        sub_code: sub[0].toUpperCase(),
+        sub_name: sub[1].toUpperCase(),
         sem: sub[2],
         branch: sub[3],
         sub_type: sub[4]

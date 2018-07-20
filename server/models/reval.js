@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 module.exports = mongoose.model(
-  'reval', 
+  "reval",
   new mongoose.Schema({
     usn: String,
     sub_code: String,

@@ -61,11 +61,9 @@ export default class AddStudentSubject extends Component {
 				.post(
 					"/api/admin/add_stud_reg_course",
 					{
-						opted_subjects: {
-							usn: this.state.USN,
-							sub_name: this.state.sub_name,
-							sub_code: this.state.sub_code
-						}
+						usn: this.state.USN,
+						sub_name: this.state.sub_name,
+						sub_code: this.state.sub_code
 					},
 					{ cancelToken: source.token }
 				)

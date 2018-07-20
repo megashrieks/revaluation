@@ -8,7 +8,10 @@ module.exports = (req, res) => {
   student.findOne({ usn: student_data.usn })
   .then(data => {
     if(data === null)
-      return new student(student_data).save();
+      return new student({
+        ...student_data,
+        usn: student_data.usn.toUpperCase()
+      }).save();
     return Promise.resolve(-1);
   })
   .then(data => {

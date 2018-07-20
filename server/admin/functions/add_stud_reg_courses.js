@@ -11,9 +11,9 @@ module.exports = (req, res) => {
 
   Promise.all(stud_reg_courses.map(data => {
     return new reval({
-      usn: data[0],
-      sub_code: data[1],
-      sub_name: data[2]
+      usn: data[0].toUpperCase(),
+      sub_code: data[1].toUpperCase(),
+      sub_name: data[2].toUpperCase()
     }).save();
   }))
   .then(_ => res.json("success"))

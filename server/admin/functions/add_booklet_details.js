@@ -11,8 +11,8 @@ module.exports = (req, res) => {
 
   Promise.all(booklet_details.map(data => {
     return new usn_booklet({
-      usn: data[0],
-      sub_code: data[1],
+      usn: data[0].toUpperCase(),
+      sub_code: data[1].toUpperCase(),
       booklet_code: data[2]
     }).save();
   }))

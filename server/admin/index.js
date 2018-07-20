@@ -38,6 +38,4 @@ router.post(
 
 router.post('/report', functions.get_report);
 
-router.get('/get_branches', functions.get_branches);
-
 module.exports = router;
