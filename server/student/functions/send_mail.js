@@ -5,7 +5,6 @@ pdfmake.vfs = vfs_fonts.pdfMake.vfs;
 
 const { mail_add, mail_pwd } = require('../../../credentials/credentials');
 const get_docdef = require('../../utils/get_docdef');
-const { reval, student } = require('../../models');
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -18,48 +17,31 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-const mailOptions = {
-    from: mail_add, 
-    to: null,
-    subject: "Revaluation application.",
-    html: '<h3>wattup</h3>', 
-    attachments: [
-      { 
-        filename: 'reval.pdf', 
-        content: null, 
-        encoding: 'base64',
-        contentType: 'text/pdf'
-      }
-    ]
-};
 
-
-// { email: '' } 
-
-module.exports = (req, res) => {
-  Promise.all(
-    [
-      student.findOne({ usn: req.usn }, { name: 1 }), 
-      reval.find(
-        { usn: req.usn, reval: true }, 
-        { sub_code: 1, sub_name: 1, sem: 1 }
-      )
-    ]
-  )
-  .then(data => {
-    pdfmake.createPdf(get_docdef(data[0].name, req.usn, data[1]))
+module.exports.sendMail = (name, email, sub_arr) => {
+  return new Promise((resolve, reject) => {
+    pdfmake.createPdf(get_docdef(name, req.usn, sub_arr))
     .getBase64(base_64_data => {
-      mailOptions.to = req.body.email;
-      mailOptions.attachments[0].content = base_64_data;
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error)
-          return res.json("error while sending the mail!");
-        mailOptions.attachments[0].content = null;
-        res.json('mail sent successfuly'); 
-      });
+      transporter.sendMail(
+        {
+          from: mail_add, to: email,
+          subject: "Revaluation application.",
+          html: '<h3>wattup</h3>', 
+          attachments: [
+            { 
+              filename: 'revaluationInfo.pdf', 
+              content: base_64_data, 
+              encoding: 'base64',
+              contentType: 'text/pdf'
+            }
+          ]
+        }, (error, info) => {
+          error !== null ? reject("error while sending the mail!")
+          : resolve('mail sent successfuly'); 
+        }
+      );
     })
-
-  })
-  
+  }) 
 }
+
   

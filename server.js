@@ -14,7 +14,7 @@ const student_check_token = check_token_gen(admin_flag = false);
 
 
 const { db_url } = require('./credentials/credentials');
-mongoose.connect('mongodb://localhost:27017/reval', { useNewUrlParser: true })
+mongoose.connect(db_url, { useNewUrlParser: true })
 .then(_ => console.log('connected to db'))
 .catch(_ => console.log('error connecting to db'));
 
