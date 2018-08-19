@@ -2,7 +2,6 @@ const { reval } = require('../../models');
 const { sendMail } = require('./send_mail');
 
 // reval_subs: [{ sub_code: '', sub_name: '', sem: number }, ...],
-// name: '',
 // email: ''
 
 module.exports = (req, res) => {
@@ -18,7 +17,7 @@ module.exports = (req, res) => {
       )
     }))
   })
-  .then(_ => sendMail(req.body.name, req.body.email, req.body.reval_subs))
+  .then(_ => sendMail(req.username, req.body.email, req.body.reval_subs))
   .then(_ => res.json('sucessfully registered for revaluation'))
   .catch(err => res.json('error while registering!!try again'))
 }

@@ -9,6 +9,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-fileupload": "^0.4.0",
+    "hummus-recipe": "^1.7.4",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.1",
     "node-xlsx": "^0.12.1",
