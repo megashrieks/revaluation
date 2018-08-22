@@ -7,6 +7,10 @@ import axios from "axios";
 import Loading from "../../Loading/Loading";
 import RenderTable from "../../RenderTable/RenderTable";
 import Modal from "../../Modal/Modal";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import Logo from "./logo.png";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 const CancelToken = axios.CancelToken;
 let source;
 class Reports extends Component {
@@ -132,6 +136,7 @@ class Reports extends Component {
 						details.push({
 							sem: element.sem,
 							code: ele._id.sub_code,
+							name: ele._id.sub_name,
 							applicants: ele.applicants
 						});
 					});
@@ -140,6 +145,7 @@ class Reports extends Component {
 					data: details,
 					loading: false
 				});
+				console.log(details);
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) console.log(thrown.message);
@@ -148,11 +154,170 @@ class Reports extends Component {
 	componentWillUnmount() {
 		source.cancel("Operation cancelled by user");
 	}
+	getBranch = branch => {
+		let fullBranch = "";
+		this.list.forEach(element => {
+			if (element.sub_code === branch) {
+				fullBranch = element.name;
+				return;
+			}
+		});
+		return fullBranch;
+	};
+	generatePdf = () => {
+		let rows = [];
+		let clone = [];
+		let template = {
+			columns: [
+				{ text: { bold: true, text: "Semester : " } },
+				{ text: { bold: true, text: "Subject Code : " } },
+				{ text: { bold: true, text: "Subject Name : " } }
+			],
+			table: {
+				headerRows: 1,
+				widths: ["20%", "40%", "40%"],
+				body: []
+			}
+		};
+		this.state.data.forEach(element => {
+			let tempObj = {
+				table: {
+					headerRows: 0,
+					widths: ["20%", "40%", "40%"],
+					body: []
+				}
+			};
+			let columns = {
+				margin: [0, 30, 0, 10],
+				columns: [
+					{
+						text: { bold: true, text: "Semester : " + element.sem }
+					},
+					{
+						text: {
+							bold: true,
+							text: "Subject Code : " + element.code
+						}
+					},
+					{
+						text: {
+							bold: true,
+							text: "Subject Name : " + element.name
+						}
+					}
+				]
+			};
+			tempObj.table.body.push([
+				{
+					text: {
+						alignment: "center",
+						text: "Sl. No"
+					}
+				},
+				{
+					text: {
+						alignment: "center",
+						text: "USN"
+					}
+				},
+				{
+					text: {
+						alignment: "center",
+						text: "Booklet Code"
+					}
+				}
+			]);
+			element.applicants.forEach((applicant, index) => {
+				tempObj.table.body.push([
+					{
+						text: {
+							alignment: "center",
+							text: index + 1
+						}
+					},
+					{
+						text: {
+							alignment: "center",
+							text: applicant.usn
+						}
+					},
+					{
+						text: {
+							alignment: "center",
+							text: applicant.booklet_code.booklet_code
+						}
+					}
+				]);
+			});
+			rows.push(columns, tempObj);
+		});
+		let docDefinition = {
+			footer: function(currentPage, pageCount) {
+				return {
+					columns: [
+						{
+							margin: [30, 10, 30, 0],
+							alignment: "left",
+							text: {
+								color: "#777",
+								bold: true,
+								text: "Powered by Finite Loop"
+							}
+						},
+						{
+							margin: [0, 10, 30, 0],
+							alignment: "right",
+							text: {
+								color: "#777",
+								bold: true,
+								text:
+									"page " +
+									currentPage.toString() +
+									" / " +
+									pageCount
+							}
+						}
+					]
+				};
+			},
+			content: [
+				{
+					image: Logo,
+					width: 120,
+					height: 90,
+					style: "icentered"
+				},
+				{
+					columns: [
+						{
+							width: "100%",
+							margin: [0, 10, 0, 5],
+							alignment: "center",
+							text: {
+								bold: true,
+								fontSize: 16,
+								text:
+									"Branch : " +
+									this.getBranch(this.state.branch)
+							}
+						}
+					]
+				},
+				...[...rows]
+			],
+			styles: {
+				icentered: {
+					alignment: "center"
+				}
+			}
+		};
+		pdfMake.createPdf(docDefinition).print();
+	};
 	render() {
 		return (
 			<Loading loading={this.state.loading}>
 				<div className="padd-25-50">
-					<div className="width-third">
+					<div className="half">
 						<FormControl fullWidth>
 							<InputLabel>Branch</InputLabel>
 							<Select
@@ -189,6 +354,18 @@ class Reports extends Component {
 					) : (
 						<div className="minor-info">No data available</div>
 					)}
+					{!this.state.loading &&
+						!!this.state.branch &&
+						!!this.state.data.length && (
+							<div className="downloads">
+								<div
+									className="full fake-link"
+									onClick={this.generatePdf}
+								>
+									Download this document
+								</div>
+							</div>
+						)}
 				</div>
 			</Loading>
 		);
