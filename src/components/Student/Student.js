@@ -17,15 +17,11 @@ export default class Student extends Component {
 	state = {
 		loading: false,
 		error: false,
-		subjects: [
-			{ sub_code: "abcdef", sub_name: "ghijkl" },
-			{ sub_code: "abcaddef", sub_name: "ghijkl" },
-			{ sub_code: "afdbcdef", sub_name: "ghijkl" }
-		],
+		subjects: [],
 		selectedSubjects: [],
 		redirect: false,
 		pending: false,
-		name: "mario gonzales",
+		name: "",
 		modalDisplayed: false,
 		emailerror: false,
 		email: ""
@@ -77,9 +73,15 @@ export default class Student extends Component {
 					});
 					return;
 				}
+				let selectedSubjects = [];
+				if (!!!data.data.selected_subjects)
+					selectedSubjects = [];
+				else
+					selectedSubjects = data.data.selectedSubjects;
 				this.setState({
 					name: data.data.name,
-					subjects:data.data.opted_subjects,
+					subjects: data.data.opted_subjects,
+					selectedSubjects:selectedSubjects,
 					loading: false
 				});
 			})

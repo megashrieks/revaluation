@@ -22,7 +22,7 @@ class Admin extends Component {
 		super();
 		this.state = {
 			redirect: false,
-			loading: false
+			loading: true
 		};
 		axios.interceptors.response.use(resp => {
 			if (!!resp.data.error && resp.data.error === "auth error") {
@@ -70,34 +70,34 @@ class Admin extends Component {
 			<Fragment>
 				{routeChanger}
 				<Loading loading={this.state.loading} conditional={true}>
-					<div className="container">
+					{!this.state.loading && <div className="container">
 						<Switch>
 							<Route
 								path={this.props.match.url + "/reports"}
-								component={() => <Reports />}
+								component={Reports}
 							/>
 							<Route
 								path={this.props.match.url + "/booklet"}
-								component={() => <BookletUpload />}
+								component={BookletUpload}
 							/>
 							<Route
 								path={this.props.match.url + "/userreg"}
-								component={() => <UserRegistration />}
+								component={UserRegistration}
 							/>
 							<Route
 								path={this.props.match.url + "/studentsub"}
-								component={() => <AddStudentSubject />}
+								component={AddStudentSubject}
 							/>
 							<Route
 								path={this.props.match.url + "/subject"}
-								component={() => <AddSubject />}
+								component={AddSubject}
 							/>
 							<Route
 								path={this.props.match.url}
-								component={() => <Dashboard />}
+								component={Dashboard}
 							/>
 						</Switch>
-					</div>
+					</div>}
 				</Loading>
 			</Fragment>
 		);
