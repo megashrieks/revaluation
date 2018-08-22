@@ -4,11 +4,9 @@ const vfs_fonts = require('pdfmake/build/vfs_fonts');
 pdfmake.vfs = vfs_fonts.pdfMake.vfs;
 
 const HummusRecipe = require('hummus-recipe');
-const pdfDoc = new HummusRecipe('./reval.pdf', `${req.usn}_info.pdf`);
 const fs = require('fs');
 
 const { mail_add, mail_pwd } = require('../../../credentials/credentials');
-const get_docdef = require('../../utils/get_docdef');
 const font_style = { 
   fontSize: 13,
   color: '111111'
@@ -30,11 +28,12 @@ const transporter = nodemailer.createTransport({
 })
 
 
-module.exports.sendMail = (name, email, sub_arr) => {
+module.exports.sendMail = (name, email, sub_arr, usn) => {
   return new Promise((resolve, reject) => {
+    let pdfDoc = new HummusRecipe('./reval.pdf', `${usn}_info.pdf`);
 
     let my_pdf = pdfDoc.editPage(1);
-    let d = new Date(), usn_len = req.usn.length;
+    let d = new Date(), usn_len = usn.length;
 
     // adding DATE to the pdf.
     my_pdf.text(`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`, 
@@ -67,14 +66,14 @@ module.exports.sendMail = (name, email, sub_arr) => {
             attachments: [
               { 
                 filename: 'revaluationInfo.pdf', 
-                path: `./${req.usn}_info.pdf`, 
+                path: `./${usn}_info.pdf`, 
                 contentType: 'text/pdf'
               }
             ]
           }, (error, info) => {
             error !== null ? reject("error while sending the mail!")
             : resolve('mail sent successfuly'); 
-            fs.unlink(`./${req.usn}_info.pdf`);
+            fs.unlink(`./${usn}_info.pdf`);
           }
         );
       }

@@ -6,6 +6,7 @@ module.exports = (req, res) => {
     reval.find({ usn: req.usn }, { reval: 1, sub_code: 1, sub_name: 1 })
   ])
   .then(data => {
+    console.log(data[1]);
     res.json({
       name: data[0].name,
       usn: req.usn,

@@ -17,7 +17,7 @@ module.exports = (req, res) => {
       )
     }))
   })
-  .then(_ => sendMail(req.username, req.body.email, req.body.reval_subs))
+  .then(_ => sendMail(req.username, req.body.email, req.body.reval_subs, req.usn))
   .then(_ => res.json('sucessfully registered for revaluation'))
   .catch(err => res.json('error while registering!!try again'))
 }
