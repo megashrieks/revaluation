@@ -140,7 +140,6 @@ class Reports extends Component {
 					data: details,
 					loading: false
 				});
-				console.log(details);
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) console.log(thrown.message);

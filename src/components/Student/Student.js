@@ -58,14 +58,10 @@ export default class Student extends Component {
 			loading: true
 		});
 		axios
-			.get(
-				"/api/student/get_student_info",
-				{
-					cancelToken: source.token
-				}
-			)
+			.get("/api/student/get_student_info", {
+				cancelToken: source.token
+			})
 			.then(data => {
-				console.log(data);
 				if (data.error) {
 					this.setState({
 						error: true,
@@ -74,14 +70,12 @@ export default class Student extends Component {
 					return;
 				}
 				let selectedSubjects = [];
-				if (!!!data.data.selected_subjects)
-					selectedSubjects = [];
-				else
-					selectedSubjects = data.data.selectedSubjects;
+				if (!!!data.data.selected_subjects) selectedSubjects = [];
+				else selectedSubjects = data.data.selectedSubjects;
 				this.setState({
 					name: data.data.name,
 					subjects: data.data.opted_subjects,
-					selectedSubjects:selectedSubjects,
+					selectedSubjects: selectedSubjects,
 					loading: false
 				});
 			})
@@ -171,7 +165,6 @@ export default class Student extends Component {
 	};
 	toggleModal = () => {
 		this.setState(prevState => {
-			console.log(prevState.modalDisplayed);
 			return { modalDisplayed: !prevState.modalDisplayed };
 		});
 	};
@@ -193,8 +186,11 @@ export default class Student extends Component {
 		});
 	};
 	checkEmail = str => {
-		return str === "" || !/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/gi.test(
-			str
+		return (
+			str === "" ||
+			!/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/gi.test(
+				str
+			)
 		);
 	};
 	render() {
@@ -238,7 +234,11 @@ export default class Student extends Component {
 										<Fragment>
 											{this.state.selectedSubjects.map(
 												(element, index) => {
-													return <div className="cell-full" key={"cell" + index}>
+													return (
+														<div
+															className="cell-full"
+															key={"cell" + index}
+														>
 															<div className="sm-text">
 																{
 																	element.sub_code
@@ -249,7 +249,8 @@ export default class Student extends Component {
 																	element.sub_name
 																}
 															</div>
-														</div>;
+														</div>
+													);
 												}
 											)}
 										</Fragment>
