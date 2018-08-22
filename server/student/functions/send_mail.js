@@ -4,7 +4,7 @@ const vfs_fonts = require('pdfmake/build/vfs_fonts');
 pdfmake.vfs = vfs_fonts.pdfMake.vfs;
 
 const HummusRecipe = require('hummus-recipe');
-const pdfDoc = new HummusRecipe('./reval.pdf', `${req.usn}_info.pdf`);
+const pdfDoc = new HummusRecipe('./reval.pdf', `info.pdf`);
 const fs = require('fs');
 
 const { mail_add, mail_pwd } = require('../../../credentials/credentials');
