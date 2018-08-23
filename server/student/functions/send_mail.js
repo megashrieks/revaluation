@@ -1,8 +1,4 @@
 const nodemailer = require('nodemailer');
-const pdfmake = require('pdfmake/build/pdfmake');
-const vfs_fonts = require('pdfmake/build/vfs_fonts');
-pdfmake.vfs = vfs_fonts.pdfMake.vfs;
-
 const HummusRecipe = require('hummus-recipe');
 const fs = require('fs');
 
@@ -14,7 +10,7 @@ const font_style = {
 sub_font_style = {
   ...font_style,
   fontSize: 12
-}
+};
 
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -28,7 +24,7 @@ const transporter = nodemailer.createTransport({
 })
 
 
-module.exports.sendMail = (name, email, sub_arr, usn) => {
+module.exports.sendMail = (name = "Dummy Name", email, sub_arr, usn) => {
   return new Promise((resolve, reject) => {
     let pdfDoc = new HummusRecipe('./reval.pdf', `${usn}_info.pdf`);
 

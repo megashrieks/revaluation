@@ -3,6 +3,7 @@ const { sendMail } = require('./send_mail');
 
 // reval_subs: [{ sub_code: '', sub_name: '', sem: number }, ...],
 // email: ''
+// u_name: ''
 
 module.exports = (req, res) => {
   reval.updateMany(
@@ -17,7 +18,7 @@ module.exports = (req, res) => {
       )
     }))
   })
-  .then(_ => sendMail(req.username, req.body.email, req.body.reval_subs, req.usn))
+  .then(_ => sendMail(req.body.u_name, req.body.email, req.body.reval_subs, req.usn))
   .then(_ => res.json('sucessfully registered for revaluation'))
   .catch(err => res.json('error while registering!!try again'))
 }

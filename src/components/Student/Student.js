@@ -62,6 +62,7 @@ export default class Student extends Component {
 				cancelToken: source.token
 			})
 			.then(data => {
+				console.log(data.data);
 				if (data.error) {
 					this.setState({
 						error: true,
