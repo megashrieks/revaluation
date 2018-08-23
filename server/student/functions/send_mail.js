@@ -9,7 +9,7 @@ const font_style = {
 },
 sub_font_style = {
   ...font_style,
-  fontSize: 12
+  fontSize: 9
 };
 
 const transporter = nodemailer.createTransport({
@@ -49,7 +49,7 @@ module.exports.sendMail = (name = "Dummy Name", email, sub_arr, usn) => {
       let row = 310 + index*22;
       my_pdf.text(`${sub.sem}`, 124, row, font_style);
       my_pdf.text(`${sub.sub_code}`, 171, row, font_style);
-      my_pdf.text(`${sub.sub_name}`, 240, row, sub_font_style);
+      my_pdf.text(`${sub.sub_name}`, 233, row, sub_font_style);
     })
 
     my_pdf.endPage().endPDF(

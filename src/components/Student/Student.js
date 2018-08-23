@@ -62,7 +62,6 @@ export default class Student extends Component {
 				cancelToken: source.token
 			})
 			.then(data => {
-				console.log(data.data);
 				if (data.error) {
 					this.setState({
 						error: true,
@@ -189,8 +188,8 @@ export default class Student extends Component {
 					"/api/student/apply_reval",
 					{
 						username: this.state.name,
-						reval_subs: this.state.selectedSubjects.map(element => {
-							return element.sub_code;
+						reval_subs: this.state.selectedSubjects.map(({ sub_code, sub_name, sem}) => {
+							return { sub_code, sub_name, sem }
 						}),
 						email: this.state.email,
 						usn: this.state.usn
