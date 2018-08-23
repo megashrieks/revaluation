@@ -17,7 +17,7 @@ class StudentLogin extends Component {
 			usernameerror: false,
 			passworderror: false,
 			password: "1998-06-08",
-			autherror:false
+			autherror: false
 		};
 	}
 	errorinfo = "You need to enter a valid USN";
@@ -69,6 +69,7 @@ class StudentLogin extends Component {
 	};
 	componentDidMount() {
 		source = CancelToken.source();
+		localStorage.removeItem("auth");
 	}
 	componentWillUnmount() {
 		source.cancel("Operation cancelled by user");
@@ -79,7 +80,7 @@ class StudentLogin extends Component {
 				<div className="header">Student login</div>
 				<form name="admin-login" onSubmit={this.login}>
 					<HintedInput
-						error={this.state.autherror ||this.state.usernameerror}
+						error={this.state.autherror || this.state.usernameerror}
 						errorMsg={
 							this.state.autherror ? this.authmsg : this.errorinfo
 						}

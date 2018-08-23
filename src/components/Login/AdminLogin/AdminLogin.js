@@ -69,6 +69,7 @@ class AdminLogin extends Component {
 	};
 	componentDidMount() {
 		source = CancelToken.source();
+		localStorage.removeItem("auth");
 	}
 	componentWillUnmount() {
 		source.cancel("Operation cancelled by user");

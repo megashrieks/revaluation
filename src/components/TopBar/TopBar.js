@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
+import { withRouter } from "react-router-dom";
 import "./TopBar.css";
 import Logo from "./logo.png";
-export default class TopBar extends Component {
+class TopBar extends Component {
 	render() {
 		return (
 			<Fragment>
@@ -15,9 +16,17 @@ export default class TopBar extends Component {
 						}}
 						alt="nitte-logo"
 					/>
-					<button className="option">Logout</button>
+					<button
+						className="option"
+						onClick={() => {
+							this.props.history.push("/login");
+						}}
+					>
+						Logout
+					</button>
 				</div>
 			</Fragment>
 		);
 	}
 }
+export default withRouter(TopBar);
