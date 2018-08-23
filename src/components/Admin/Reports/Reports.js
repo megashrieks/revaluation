@@ -145,12 +145,14 @@ class Reports extends Component {
 					data: details,
 					loading: false
 				});
-				console.log(details);
 			})
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) console.log(thrown.message);
 			});
 	};
+	componentDidMount() {
+		source = CancelToken.source();
+	}
 	componentWillUnmount() {
 		source.cancel("Operation cancelled by user");
 	}
@@ -166,19 +168,6 @@ class Reports extends Component {
 	};
 	generatePdf = () => {
 		let rows = [];
-		let clone = [];
-		let template = {
-			columns: [
-				{ text: { bold: true, text: "Semester : " } },
-				{ text: { bold: true, text: "Subject Code : " } },
-				{ text: { bold: true, text: "Subject Name : " } }
-			],
-			table: {
-				headerRows: 1,
-				widths: ["20%", "40%", "40%"],
-				body: []
-			}
-		};
 		this.state.data.forEach(element => {
 			let tempObj = {
 				table: {

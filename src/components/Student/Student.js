@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Panel from "../Panel/Panel";
 import "./Student.css";
 import ModalUntriggered from "../Modal/ModalUntriggered";
-import { Button } from "@material-ui/core";
+import { Button, Snackbar } from "@material-ui/core";
 import HintedInput from "../HintedInput/HintedInput";
 const CancelToken = axios.CancelToken;
 let source;
@@ -24,7 +24,9 @@ export default class Student extends Component {
 		name: "",
 		modalDisplayed: false,
 		emailerror: false,
-		email: ""
+		email: "",
+		snack: false,
+		snackmsg: ""
 	};
 	emailerrormsg = "Enter a valid email address";
 	tableHeads = ["Sub. code", "Sub. Name"];
@@ -54,9 +56,7 @@ export default class Student extends Component {
 					});
 				}
 			});
-		this.setState({
-			loading: true
-		});
+		this.setState({ loading: true });
 		axios
 			.get("/api/student/get_student_info", {
 				cancelToken: source.token
@@ -69,12 +69,16 @@ export default class Student extends Component {
 					});
 					return;
 				}
-				let selectedSubjects = [];
-				if (!!!data.data.selected_subjects) selectedSubjects = [];
-				else selectedSubjects = data.data.selectedSubjects;
+				let selectedSubjects = [],
+					optedSubjects = [];
+				data.data.opted_subjects.forEach(element => {
+					if (element.reval) selectedSubjects.push(element);
+					else optedSubjects.push(element);
+				});
 				this.setState({
 					name: data.data.name,
-					subjects: data.data.opted_subjects,
+					usn: data.data.usn,
+					subjects: optedSubjects,
 					selectedSubjects: selectedSubjects,
 					loading: false
 				});
@@ -175,7 +179,35 @@ export default class Student extends Component {
 				emailerror: true
 			});
 		else {
-			//send the subjects and the email address to server
+			source = CancelToken.source();
+			this.setState({
+				loading: true
+			});
+			axios
+				.post(
+					"/api/student/apply_reval",
+					{
+						username: this.state.name,
+						reval_subs: this.state.selectedSubjects.map(element => {
+							return element.sub_code;
+						}),
+						email: this.state.email,
+						usn: this.state.usn
+					},
+					{ cancelToken: source.token }
+				)
+				.then(data => {
+					this.setState({
+						loading: false,
+						snack: true,
+						snackmsg: data.data
+					});
+				})
+				.catch(thrown => {
+					if (axios.isCancel(thrown)) {
+						console.log(thrown.message);
+					}
+				});
 		}
 		return emailStatus;
 	};
@@ -193,11 +225,21 @@ export default class Student extends Component {
 			)
 		);
 	};
+	handleClose = name => () => {
+		this.setState({ [name]: false });
+	};
 	render() {
 		let routeChanger = this.state.redirect ? <Redirect to="/" /> : null;
 		return (
 			<Fragment>
 				{routeChanger}
+				<Snackbar
+					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+					open={this.state.snack}
+					autoHideDuration={3000}
+					onClose={this.handleClose("snack")}
+					message={<span>{this.state.snackmsg || "Error!"}</span>}
+				/>
 				{this.state.modalDisplayed && (
 					<ModalUntriggered
 						content={
@@ -293,11 +335,18 @@ export default class Student extends Component {
 					<Loading loading={this.state.loading}>
 						<div className="fluid-container">
 							<div className="header">
-								Welcome {this.state.name}
+								Welcome{" "}
+								<span
+									style={{
+										textTransform: "capitalize"
+									}}
+								>
+									{this.state.name.toLowerCase()}
+								</span>
 							</div>
 							<Panel
 								title={
-									<span className="mini-header fake-link black">
+									<span className="mini-header black">
 										Some Information
 									</span>
 								}
