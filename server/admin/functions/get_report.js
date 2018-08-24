@@ -46,12 +46,11 @@ module.exports = (req, res) => {
     { $unwind: "$booklet_code" },
     { 
       $group: {
-        _id: { sem: "$sem", sub_code: "$sub_code" },
+        _id: { sem: "$sem", sub_code: "$sub_code", sub_name: "$sub_name" },
         "applicants": { 
           $push: {
             usn: "$usn",
             booklet_code: "$booklet_code",
-            sub_name: '$sub_name'
           } 
         }
       }

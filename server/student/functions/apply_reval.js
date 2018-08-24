@@ -3,7 +3,7 @@ const { sendMail } = require('./send_mail');
 
 // reval_subs: [{ sub_code: '', sub_name: '', sem: number }, ...],
 // email: ''
-// u_name: ''
+// username: ''
 
 module.exports = (req, res) => {
   reval.updateMany(
