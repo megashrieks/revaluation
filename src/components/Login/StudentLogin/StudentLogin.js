@@ -64,6 +64,11 @@ class StudentLogin extends Component {
 			.catch(thrown => {
 				if (axios.isCancel(thrown)) {
 					console.log(thrown.message);
+				} else {
+					this.setState({
+						loading: false,
+						autherror: true
+					});
 				}
 			});
 	};
