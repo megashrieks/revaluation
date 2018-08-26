@@ -3,10 +3,10 @@ import {
 	Route,
 	Switch,
 	withRouter,
-	Redirect
+	Redirect,
+	NavLink as Link
 } from "react-router-dom";
 import "./Admin.css";
-import Dashboard from "./Dashboard/Dashboard";
 import Reports from "./Reports/Reports";
 import BookletUpload from "./BookletUpload/BookletUpload";
 import axios from "axios";
@@ -22,7 +22,7 @@ class Admin extends Component {
 		super();
 		this.state = {
 			redirect: false,
-			loading: true
+			loading: false
 		};
 		axios.interceptors.response.use(resp => {
 			if (!!resp.data.error && resp.data.error === "auth error") {
@@ -35,7 +35,7 @@ class Admin extends Component {
 	componentDidMount() {
 		source = CancelToken.source();
 		this.setState({
-			loading: true
+			// loading: true
 		});
 		checkAuth(source)
 			.then(data => {
@@ -69,35 +69,80 @@ class Admin extends Component {
 		return (
 			<Fragment>
 				{routeChanger}
-				<Loading loading={this.state.loading} conditional={true}>
-					{!this.state.loading && <div className="container">
-						<Switch>
-							<Route
-								path={this.props.match.url + "/reports"}
-								component={Reports}
-							/>
-							<Route
-								path={this.props.match.url + "/booklet"}
-								component={BookletUpload}
-							/>
-							<Route
-								path={this.props.match.url + "/userreg"}
-								component={UserRegistration}
-							/>
-							<Route
-								path={this.props.match.url + "/studentsub"}
-								component={AddStudentSubject}
-							/>
-							<Route
-								path={this.props.match.url + "/subject"}
-								component={AddSubject}
-							/>
-							<Route
-								path={this.props.match.url}
-								component={Dashboard}
-							/>
-						</Switch>
-					</div>}
+				<Loading loading={this.state.loading}>
+					{!this.state.loading && (
+						<div className="container">
+							<div className="sidebar">
+								<Link
+									to={this.props.match.url + "/reports"}
+									className="option-sidebar"
+								>
+									Reports
+								</Link>
+								<Link
+									to={this.props.match.url + "/booklet"}
+									className="option-sidebar"
+								>
+									Booklet Upload
+								</Link>
+								<Link
+									to={this.props.match.url + "/userreg"}
+									className="option-sidebar"
+								>
+									User Registration
+								</Link>
+								<Link
+									to={this.props.match.url + "/studentsub"}
+									className="option-sidebar"
+								>
+									Add Student Subject
+								</Link>
+								<Link
+									to={this.props.match.url + "/subject"}
+									className="option-sidebar"
+								>
+									Add Subject
+								</Link>
+							</div>
+							<div className="content">
+								<Switch>
+									<Route
+										path={this.props.match.url + "/reports"}
+										component={Reports}
+									/>
+									<Route
+										path={this.props.match.url + "/booklet"}
+										component={BookletUpload}
+									/>
+									<Route
+										path={this.props.match.url + "/userreg"}
+										component={UserRegistration}
+									/>
+									<Route
+										path={
+											this.props.match.url + "/studentsub"
+										}
+										component={AddStudentSubject}
+									/>
+									<Route
+										path={this.props.match.url + "/subject"}
+										component={AddSubject}
+									/>
+									<Route
+										path={this.props.match.url}
+										component={() => {
+											return (
+												<div className="centered">
+													Select a function from the
+													sidebar to continue...
+												</div>
+											);
+										}}
+									/>
+								</Switch>
+							</div>
+						</div>
+					)}
 				</Loading>
 			</Fragment>
 		);
