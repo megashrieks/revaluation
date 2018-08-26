@@ -6,11 +6,13 @@ import Login from "./components/Login/Login";
 import Admin from "./components/Admin/Admin";
 import Student from "./components/Student/Student";
 import TopBar from "./components/TopBar/TopBar";
+import NotFound from "./components/NotFound/NotFound";
 class App extends Component {
 	render() {
 		return (
 			<div className="App">
 				<Switch>
+					<Route path="/" component={() => <AuthRedirect />} exact />
 					<Route
 						path="/login"
 						component={props => <Login {...props} />}
@@ -34,7 +36,7 @@ class App extends Component {
 						)}
 					/>
 					} />
-					<Route path="/" component={() => <AuthRedirect />} />
+					<Route path="/" component={() => <NotFound />} />
 				</Switch>
 			</div>
 		);

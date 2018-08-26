@@ -65,7 +65,9 @@ class Admin extends Component {
 		source.cancel("Operation cancelled by user");
 	}
 	render() {
-		let routeChanger = this.state.redirect ? <Redirect to="/" /> : null;
+		let routeChanger = this.state.redirect ? (
+			<Redirect to="/notfound" />
+		) : null;
 		return (
 			<Fragment>
 				{routeChanger}

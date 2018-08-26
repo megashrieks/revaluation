@@ -131,6 +131,7 @@ class Reports extends Component {
 			.then(data => {
 				let d = data.data;
 				let details = [];
+				console.log(d);
 				d.forEach(element => {
 					element.sem_details.forEach(ele => {
 						details.push({
