@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Loading from "../../Loading/Loading";
 import HintedInput from "../../HintedInput/HintedInput";
 import { Button, Snackbar } from "@material-ui/core";
 import UploadForm from "../../UploadForm/UploadForm";
+import Panel from "../../Panel/Panel";
 import axios from "axios";
 const CancelToken = axios.CancelToken;
 let source;
@@ -11,12 +12,9 @@ export default class AddStudentSubject extends Component {
 		USN: "",
 		USNerror: false,
 		sub_code: "",
-		sub_codeerror: false,
-		sub_name: "",
-		sub_nameerror: false
+		sub_codeerror: false
 	};
 	USNerrormsg = "Enter a valid USN";
-	sub_nameerrormsg = "Enter a valid subject name";
 	sub_codeerrormsg = "Enter a valid subject code";
 	symbolTest = str => {
 		return str === "" || /[$-/:-?{-~!"^_`\\#@[\]]/g.test(str);
@@ -38,20 +36,16 @@ export default class AddStudentSubject extends Component {
 			USN: "",
 			USNerror: false,
 			sub_code: "",
-			sub_codeerror: false,
-			sub_name: "",
-			sub_nameerror: false
+			sub_codeerror: false
 		});
 	};
 	submitData = () => {
 		let sub_codeTest = this.symbolTest(this.state.sub_code);
-		let sub_nameTest = this.symbolTest(this.state.sub_name);
 		let USNTest = this.USNTest(this.state.USN);
-		let totalError = sub_codeTest || sub_nameTest || USNTest;
+		let totalError = sub_codeTest || USNTest;
 		if (totalError)
 			this.setState({
 				sub_codeerror: sub_codeTest,
-				sub_nameerror: sub_nameTest,
 				USNerror: USNTest
 			});
 		else {
@@ -62,7 +56,6 @@ export default class AddStudentSubject extends Component {
 					"/api/admin/add_stud_reg_course",
 					{
 						usn: this.state.USN,
-						sub_name: this.state.sub_name,
 						sub_code: this.state.sub_code
 					},
 					{ cancelToken: source.token }
@@ -107,7 +100,27 @@ export default class AddStudentSubject extends Component {
 					message={<span>{this.state.snackmsg || "Error!"}</span>}
 				/>
 				<div className="header">Add Student Registered Courses</div>
-
+				<Panel
+					title={
+						<span className="mini-header black">
+							Some Information
+						</span>
+					}
+					content={
+						<Fragment>
+							<li className="instructions">
+								The Format for the Excel Document is as follows
+								:
+							</li>
+							<li className="instructions">
+								Column 1 should be filled with USN values.
+							</li>
+							<li className="instructions">
+								Column 2 should be filled with Subject Codes.
+							</li>
+						</Fragment>
+					}
+				/>
 				<div className="half padd-15">
 					<HintedInput
 						error={this.state.USNerror}
@@ -134,20 +147,7 @@ export default class AddStudentSubject extends Component {
 						test={this.symbolTest}
 					/>
 				</div>
-				<div className="half padd-15">
-					<HintedInput
-						error={this.state.sub_nameerror}
-						errorMsg={this.sub_nameerrormsg}
-						value={this.state.sub_name}
-						type="text"
-						placeholder="subject name"
-						handleChange={(val, check) =>
-							this.handleInput("sub_name")(val, check)
-						}
-						test={this.symbolTest}
-					/>
-				</div>
-				<div className="half padd-15">
+				<div className="half padd-15" style={{ paddingTop: 0 }}>
 					<div
 						className="marg-5-10"
 						style={{ display: "inline-block" }}
