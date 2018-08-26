@@ -19,8 +19,8 @@ class App extends Component {
 						path="/admin"
 						component={() => (
 							<Fragment>
-								<TopBar />
 								<Admin />
+								<TopBar />
 							</Fragment>
 						)}
 					/>
@@ -28,8 +28,8 @@ class App extends Component {
 						path="/student"
 						component={() => (
 							<Fragment>
-								<TopBar />
 								<Student />
+								<TopBar />
 							</Fragment>
 						)}
 					/>
