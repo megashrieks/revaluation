@@ -46,7 +46,7 @@ module.exports.sendMail = (name = "Dummy Name", email, sub_arr, usn) => {
     // adding SUBJECTS to the pdf. 
     for(let i=0;i<sub_arr.length;++i) {
       let sub = sub_arr[i];
-      let row = 310 + i*22;
+      let row = 311 + i*22;
       my_pdf.text(`${sub.sem}`, 124, row, font_style_10);
       my_pdf.text(`${sub.sub_code}`, 171, row, font_style_10);
       my_pdf.text(`${String(sub.sub_name).toLowerCase()}`, 233, row, font_style_10);

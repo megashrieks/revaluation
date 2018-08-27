@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Loading from '../../Loading/Loading';
 import HintedInput from "../../HintedInput/HintedInput";
 import FormControl from "@material-ui/core/FormControl";
@@ -9,6 +9,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { Button, Snackbar } from "@material-ui/core";
 import UploadForm from "../../UploadForm/UploadForm";
 import axios from "axios";
+import Panel from "../../Panel/Panel";
 const CancelToken = axios.CancelToken;
 let source;
 export default class UserRegistration extends Component {
@@ -149,6 +150,35 @@ export default class UserRegistration extends Component {
                     message={<span>{this.state.snackmsg || "Error!"}</span>}
                 />
 				<div className="header">User Registration</div>
+				<Panel
+					title={
+						<span className="mini-header black">
+							Some Information
+						</span>
+					}
+					content={
+						<Fragment>
+							<li className="instructions">
+								The Format for the Excel Document is as follows :
+							</li>
+							<li className="instructions">
+								Column 1 should be filled with USN values.
+							</li>
+							<li className="instructions">
+								Column 2 should be filled with Student Name.
+							</li>
+							<li className="instructions">
+								Column 3 should be filled with Date of birth.
+							</li>
+							<li className="instructions">
+								Column 4 should be filled with Branch.
+							</li>	
+							<li className="instructions">
+								Column 4 should be filled with Email id.
+							</li>
+						</Fragment>
+					}
+				/>
 				<div className="half padd-25">
 					<HintedInput
 						error={this.state.nameerror}
