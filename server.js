@@ -7,10 +7,13 @@ const port = 5000;
 const auth_routes = require('./server/auth');
 const admin_routes = require('./server/admin');
 const student_routes = require('./server/student');
+const clerk_routes = require('./server/clerk');
 
 const check_token_gen = require('./server/utils/check_token');
-const admin_check_token = check_token_gen(admin_flag = true);
-const student_check_token = check_token_gen(admin_flag = false);
+const admin_check_token = check_token_gen(admin_flag = 1);
+const student_check_token = check_token_gen(admin_flag = 0);
+const clerk_check_token = check_token_gen(admin_flag = 2);
+
 
 
 const { db_url } = require('./credentials/credentials');
@@ -27,5 +30,7 @@ app.use('/api/auth', auth_routes);
 app.use('/api/admin', admin_check_token, admin_routes);
 
 app.use('/api/student', student_check_token, student_routes);
+
+app.use('/api/clerk', clerk_check_token, clerk_routes);
 
 app.listen(port, () => console.log(`listening to port ${port}`))

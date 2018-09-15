@@ -6,6 +6,6 @@ module.exports = mongoose.model(
     usn: String,
     sub_code: String,
     sub_name: String,
-    reval: { type: Boolean, default: false }
+    reval: { type: Number, default: 0 }
   })
 );
